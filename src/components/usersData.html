@@ -1,0 +1,42 @@
+<section class="usersData">
+
+    <div>
+
+        <h1>
+            Simil Mercado
+        </h1>
+
+        <h2>
+            Francioni - Mancuso
+        </h2>
+
+        <h3>
+            Get Usuarios
+        </h3>
+
+        <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+            <el-button
+            size="mini"
+            @click="getUsers"
+            type="primary"
+            icon="el-icon-edit"
+            circle
+            :title="buttonName"
+            style=""
+            ></el-button>
+
+            <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;">
+                <el-table-column
+                v-for="column in columns"
+                :key="column.id"
+                :label="column.label"
+                :prop="column.prop"
+                :width="column.width"
+                />
+            </el-table>
+
+        </el-row>
+
+    </div>
+
+</section>
