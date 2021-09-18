@@ -44,6 +44,11 @@ export default {
         try {
             const chunkUrl = process.env.VUE_APP_URL + `usuarios`;
             this.usuarios = await APIHandler.get(chunkUrl);
+
+            /* eslint-disable no-console */
+            console.log(this.usuarios);                                         //BORRAR!!!!!
+            /* eslint-enable no-console */
+
         } catch (error) {
             exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
         } finally {
