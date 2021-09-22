@@ -42,7 +42,7 @@ export default {
     async getUsers() {
       this.loading = true;
         try {
-            const chunkUrl = process.env.VUE_APP_URL + `usuarios`;
+            const chunkUrl = process.env.VUE_APP_URL + "usuarios";
             this.usuarios = await APIHandler.get(chunkUrl);
 
             /* eslint-disable no-console */

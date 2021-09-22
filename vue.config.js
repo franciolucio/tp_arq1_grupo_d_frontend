@@ -1,14 +1,13 @@
 module.exports = {
-    publicPath: '/',
+    //publicPath: '/',
     devServer: {
         proxy: {
-            "/hello-world/":{
+            "/simil-mercado/":{
                 target:
                     "http://127.0.0.1:8000",        /* local */
-                ws: true,
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/hello-world/' : ''
+                    '^/simil-mercado/' : ''
                 }
             }
         }
