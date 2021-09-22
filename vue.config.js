@@ -12,7 +12,7 @@ module.exports = {
             },
             "/simil-mercado-prod/":{
                 target:
-                    "https://similmercado.herokuapp.com/",        /* prod */
+                    "https://similmercado.herokuapp.com",        /* prod */
                 changeOrigin: true,
                 pathRewrite: {
                     '^/simil-mercado-prod/' : ''
