@@ -9,14 +9,6 @@ module.exports = {
                 pathRewrite: {
                     '^/simil-mercado/' : ''
                 }
-            },
-            "/simil-mercado-prod/":{
-                target:
-                    "https://similmercadoarq1.herokuapp.com",        /* prod */
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/simil-mercado-prod/' : ''
-                }
             }
         }
     }
