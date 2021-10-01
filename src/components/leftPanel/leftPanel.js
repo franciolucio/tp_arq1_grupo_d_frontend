@@ -57,12 +57,32 @@ export default {
     created() {},
     methods: {
 
+      async goToInicioView() {
+        this.$router.push('/');
+      },
+
       async goToUsersData() {
         this.$router.push('/usersData');
       },
 
-      async goToInicioView() {
-        this.$router.push('/');
+      async goToUserInfo() {
+        this.$router.push('/userInfo');
+      },
+
+      async goToProductsToSell() {
+        this.$router.push('/productsToSell');
+      },
+
+      async goToSoldProducts() {
+        this.$router.push('/soldProducts');
+      },
+
+      async goToProductsToBuy() {
+        this.$router.push('/productsToBuy');
+      },
+
+      async goToBuyedProducts() {
+        this.$router.push('/buyedProducts');
       },
 
     },

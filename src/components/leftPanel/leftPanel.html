@@ -12,7 +12,7 @@
             <span>Inicio</span>
         </el-menu-item>
 
-        <el-menu-item index="1" @click="goToInicioView" :hidden="disabledIndex1">
+        <el-menu-item index="1" @click="goToUserInfo" :hidden="disabledIndex1">
             <i class="el-icon-location"></i>
             <span>Datos del Usuario</span>
         </el-menu-item>
@@ -27,16 +27,16 @@
                 <i class="el-icon-document"></i>
                 <span>Productos</span>
             </template>
-            <el-menu-item index="3-1" @click="goToInicioView" :hidden="disabledIndex31">
+            <el-menu-item index="3-1" @click="goToProductsToSell" :hidden="disabledIndex31">
                 <span>Productos para vender</span>
             </el-menu-item>
-            <el-menu-item index="3-2" @click="goToInicioView" :hidden="disabledIndex32">
+            <el-menu-item index="3-2" @click="goToSoldProducts" :hidden="disabledIndex32">
                 <span>Productos vendidos</span>
             </el-menu-item>
-            <el-menu-item index="3-3" @click="goToInicioView" :hidden="disabledIndex33">
+            <el-menu-item index="3-3" @click="goToProductsToBuy" :hidden="disabledIndex33">
                 <span>Productos para comprar</span>
             </el-menu-item>
-            <el-menu-item index="3-4" @click="goToInicioView" :hidden="disabledIndex34">
+            <el-menu-item index="3-4" @click="goToBuyedProducts" :hidden="disabledIndex34">
                 <span>Productos comprados</span>
             </el-menu-item>
         </el-submenu>
