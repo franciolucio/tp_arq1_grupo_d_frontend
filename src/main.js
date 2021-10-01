@@ -7,6 +7,11 @@ import locale from 'element-ui/lib/locale/lang/es';
 import VueRouter from 'vue-router';
 import inicioView from './components/rightPanel/inicioView/index';
 import usersData from './components/rightPanel/usersData/index';
+import userInfo from './components/rightPanel/userInfo/index';
+import productsToSell from './components/rightPanel/productsToSell/index';
+import soldProducts from './components/rightPanel/soldProducts/index';
+import productsToBuy from './components/rightPanel/productsToBuy/index';
+import buyedProducts from './components/rightPanel/buyedProducts/index';
 
 
 Vue.config.productionTip = false;
@@ -15,14 +20,39 @@ export const bus = new Vue();
 
 const routes = [
     { 
-        path: '/', 
-        name: 'inicioView', 
-        component: inicioView 
+        path: '/',
+        name: 'inicioView',
+        component: inicioView
     },
     { 
-        path: '/usersData', 
-        name: 'usersData', 
-        component: usersData 
+        path: '/usersData',
+        name: 'usersData',
+        component: usersData
+    },
+    { 
+        path: '/userInfo',
+        name: 'userInfo',
+        component: userInfo
+    },
+    { 
+        path: '/productsToSell',
+        name: 'productsToSell',
+        component: productsToSell
+    },
+    { 
+        path: '/soldProducts',
+        name: 'soldProducts',
+        component: soldProducts
+    },
+    { 
+        path: '/productsToBuy',
+        name: 'productsToBuy',
+        component: productsToBuy
+    },
+    { 
+        path: '/buyedProducts',
+        name: 'buyedProducts',
+        component: buyedProducts
     }
 ];
 
