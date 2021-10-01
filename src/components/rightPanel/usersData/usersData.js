@@ -1,5 +1,5 @@
-import * as APIHandler from '../../utils/APIHandler';
-import * as exceptionHandler from '../../utils/exceptionHandler';
+import * as APIHandler from '../../../../utils/APIHandler';
+import * as exceptionHandler from '../../../../utils/exceptionHandler';
 
 export default {
   name: 'usersData',
@@ -8,7 +8,7 @@ export default {
     return {
       buttonName: "GET USUARIOS",
       loading: false,
-      usuarios: [],
+      users: [],
       columns: [
         {prop: 'id', label: 'ID', width: 'auto'},
         {prop: 'nombre', label: 'Nombre', width: 'auto'},
@@ -30,7 +30,7 @@ export default {
     },
 
     searchBar() {
-      return this.usuarios
+      return this.users
     },
 
   },
@@ -43,10 +43,10 @@ export default {
       this.loading = true;
         try {
             const chunkUrl = process.env.VUE_APP_URL + "usuarios";
-            this.usuarios = await APIHandler.get(chunkUrl);
+            this.users = await APIHandler.get(chunkUrl);
 
             /* eslint-disable no-console */
-            console.log(this.usuarios);                                         //BORRAR!!!!!
+            console.log(this.users);                                         //BORRAR!!!!!
             /* eslint-enable no-console */
 
         } catch (error) {

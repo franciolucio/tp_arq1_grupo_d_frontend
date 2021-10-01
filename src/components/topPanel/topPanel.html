@@ -1,0 +1,156 @@
+<section class="topPanel">
+
+    <el-card
+    class="box-card cardBackground"
+    shadow="never"
+    body-style="padding:0px;"
+    >
+
+        <el-row>
+            <el-col :span="12" style="padding: 10px;">
+                
+                <img src="../../assets/logo1.1.png" width="25%" height="25%">
+                
+            </el-col>
+    
+            <el-col :span="12" style="padding: 15px;">
+                <el-button
+                    @click="dialogLoginVisible=true"
+                    type="warning"
+                    size="medium"
+                    style="float: right;"
+                >
+                    SIGN UP
+                </el-button>
+
+                <el-button
+                    @click="dialogLoginVisible=true"
+                    type="warning"
+                    size="medium"
+                    style="float: right;margin-right: 15px;"
+                >
+                    LOG IN
+                </el-button>
+            </el-col>
+
+        </el-row>
+
+    </el-card>
+
+    <!-- Dialog Log In -->
+    <el-dialog :title="titleLoginDialog" :visible.sync="dialogLoginVisible" width="20%">
+
+        <el-form :model="selectUserForm" :rules="rules" ref="refSelectUserForm" size="mini">
+
+            <el-row style="text-align: left">
+
+                <el-form-item :label="titleUserType" prop="type">
+
+                    <el-select
+                    size="mini"
+                    :placeholder="placeholderUserType"
+                    v-model="selectUserForm.type"
+                    @change="selectUserType"
+                    >
+                        <el-option
+                        v-for="item in userType"
+                        :key="item.key"
+                        :label="item.label"
+                        :value="item.key"
+                        ></el-option>
+                    </el-select>
+
+                </el-form-item>
+
+            </el-row>
+
+            <el-row style="text-align: left">
+
+                <el-form-item :label="titleUserName" prop="name">
+
+                    <el-select
+                    size="mini"
+                    :placeholder="placeholderUserName"
+                    :disabled="disabledUserName"
+                    v-model="selectUserForm.name"
+                    >
+                        <el-option
+                        v-for="item in users"
+                        :key="item.key"
+                        :label="item.label"
+                        :value="item.key"
+                        ></el-option>
+                    </el-select>
+
+                </el-form-item>
+
+            </el-row>
+
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="closeDialogLogin">Cancelar</el-button>
+            <el-button size="mini" @click="submitUser" type="primary" style>Guardar</el-button>
+        </span>
+
+    </el-dialog>
+
+    <!-- Dialog Sign Up -->
+    <el-dialog :title="titleSignupDialog" :visible.sync="dialogSingupVisible" width="20%">
+
+        <el-form :model="newUserForm" :rules="rules" ref="refNewUserForm" size="mini">
+
+            <el-row style="text-align: left">
+
+                <el-form-item :label="titleUserType" prop="type">
+
+                    <el-select
+                    size="mini"
+                    :placeholder="placeholderUserType"
+                    v-model="newUserForm.type"
+                    @change="selectUserType"
+                    >
+                        <el-option
+                        v-for="item in userType"
+                        :key="item.key"
+                        :label="item.label"
+                        :value="item.key"
+                        ></el-option>
+                    </el-select>
+
+                </el-form-item>
+
+            </el-row>
+
+            <el-row style="text-align: left">
+
+                <el-form-item :label="titleUserName" prop="name">
+
+                    <el-select
+                    size="mini"
+                    :placeholder="placeholderUserName"
+                    :disabled="disabledUserName"
+                    v-model="newUserForm.name"
+                    >
+                        <el-option
+                        v-for="item in users"
+                        :key="item.key"
+                        :label="item.label"
+                        :value="item.key"
+                        ></el-option>
+                    </el-select>
+
+                </el-form-item>
+
+            </el-row>
+
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="closeDialogSignup">Cancelar</el-button>
+            <el-button size="mini" @click="submitUser" type="primary" style>Crear</el-button>
+        </span>
+
+    </el-dialog>
+
+</section>

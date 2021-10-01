@@ -5,7 +5,8 @@ import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/es';
 import VueRouter from 'vue-router';
-import usersData from './components/index';
+import inicioView from './components/rightPanel/inicioView/index';
+import usersData from './components/rightPanel/usersData/index';
 
 
 Vue.config.productionTip = false;
@@ -13,7 +14,16 @@ Vue.use(VueRouter);
 export const bus = new Vue();
 
 const routes = [
-    {path: '/', name: 'usersData', component: usersData}
+    { 
+        path: '/', 
+        name: 'inicioView', 
+        component: inicioView 
+    },
+    { 
+        path: '/usersData', 
+        name: 'usersData', 
+        component: usersData 
+    }
 ];
 
 export const router = new VueRouter(

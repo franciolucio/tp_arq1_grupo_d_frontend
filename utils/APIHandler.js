@@ -7,7 +7,9 @@ export async function get(chunkUrl) {
 
         const response = await axios.get(chunkUrl, {
             params: {},
-            headers: {},
+            headers: {
+                Accept: "application/json",
+            },
         });
         return response.data;
 
