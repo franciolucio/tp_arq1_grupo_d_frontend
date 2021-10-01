@@ -1,15 +1,15 @@
 <template>
-  <usersData/>
+  <generalView/>
 </template>
 
 <script>
 
-  import usersData from './components/index';
+  import generalView from './components/generalView/index';
 
 export default {
   name: 'app',
   components: {
-    usersData
+    generalView
   }
 }
 </script>

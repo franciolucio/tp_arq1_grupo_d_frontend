@@ -2,18 +2,6 @@
 
     <div>
 
-        <h1>
-            Simil Mercado
-        </h1>
-
-        <h2>
-            Francioni - Mancuso
-        </h2>
-
-        <h3>
-            Get Usuarios
-        </h3>
-
         <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
             <el-button
             size="mini"
@@ -22,7 +10,6 @@
             icon="el-icon-edit"
             circle
             :title="buttonName"
-            style=""
             ></el-button>
 
             <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;">

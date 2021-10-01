@@ -1,0 +1,25 @@
+<section class="generalView">
+
+    <div>
+
+      <el-row>
+
+        <topPanel/>
+
+      </el-row>
+  
+      <el-row>
+
+        <el-col :span="5" style="padding-top: 10px;">
+          <leftPanel/>
+        </el-col>
+
+        <el-col :span="19" style="background-color: rgb(255, 255, 255);  padding: 25px;">
+          <router-view/>
+        </el-col>
+
+      </el-row>
+
+    </div>
+
+  </section>

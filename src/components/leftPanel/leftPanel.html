@@ -1,0 +1,45 @@
+<section class="leftPanel">
+    <el-menu
+      default-active="0"
+      class="el-menu-vertical-demo"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      >
+
+        <el-menu-item index="0" @click="goToInicioView">
+            <i class="el-icon-menu"></i>
+            <span>Inicio</span>
+        </el-menu-item>
+
+        <el-menu-item index="1" @click="goToInicioView" :hidden="disabledIndex1">
+            <i class="el-icon-location"></i>
+            <span>Datos del Usuario</span>
+        </el-menu-item>
+        
+        <el-menu-item index="2" @click="goToUsersData" :hidden="disabledIndex2">
+            <i class="el-icon-setting"></i>
+            <span>Usuarios del Sistema</span>
+        </el-menu-item>
+
+        <el-submenu index="3" :hidden="disabledIndex3">
+            <template slot="title">
+                <i class="el-icon-document"></i>
+                <span>Productos</span>
+            </template>
+            <el-menu-item index="3-1" @click="goToInicioView" :hidden="disabledIndex31">
+                <span>Productos para vender</span>
+            </el-menu-item>
+            <el-menu-item index="3-2" @click="goToInicioView" :hidden="disabledIndex32">
+                <span>Productos vendidos</span>
+            </el-menu-item>
+            <el-menu-item index="3-3" @click="goToInicioView" :hidden="disabledIndex33">
+                <span>Productos para comprar</span>
+            </el-menu-item>
+            <el-menu-item index="3-4" @click="goToInicioView" :hidden="disabledIndex34">
+                <span>Productos comprados</span>
+            </el-menu-item>
+        </el-submenu>
+
+    </el-menu>
+</section>
