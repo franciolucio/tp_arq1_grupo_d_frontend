@@ -1,29 +1,272 @@
 <section class="usersData">
 
-    <div>
+    <center>
+        <FONT FACE="helvetica neue" SIZE=6 COLOR="black"><b>Usuarios del Sistema</b></FONT>
+    </center>
 
-        <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+    <el-divider></el-divider>
+
+    <el-row>
+        <el-col>
             <el-button
-            size="mini"
-            @click="getUsers"
-            type="primary"
-            icon="el-icon-edit"
-            circle
-            :title="buttonName"
-            ></el-button>
+                @click="dialogNewUserVisible=true"
+                type="warning"
+                size="mini"
+                style="margin-right: 5px;"
+            >
+                Nuevo Usuario
+            </el-button>
+            <el-button
+                @click="dialogNewSellerVisible=true"
+                type="warning"
+                size="mini"
+            >
+                Nuevo Vendedor
+            </el-button>
+        </el-col>
 
-            <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;">
-                <el-table-column
-                v-for="column in columns"
-                :key="column.id"
-                :label="column.label"
-                :prop="column.prop"
-                :width="column.width"
-                />
-            </el-table>
+    </el-row>
 
+    <el-tabs v-model="activeName" @tab-click="">
+
+        <el-tab-pane label="Usuarios" name="first">
+
+            <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+
+                <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;">
+
+                    <el-table-column
+                    v-for="column in columnsUsers"
+                    :key="column.id"
+                    :label="column.label"
+                    :prop="column.prop"
+                    :width="column.width"
+                    />
+
+                    <el-table-column width="140">
+                        <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            @click="editUser(scope.row)"
+                            type="primary"
+                            icon="el-icon-edit"
+                            circle
+                            title="Editar"
+                        ></el-button>
+                        <el-button
+                            size="mini"
+                            @click="deleteUser(scope.row)"
+                            type="danger"
+                            icon="el-icon-delete"
+                            circle
+                            title="Eliminar"
+                        ></el-button>
+                        </template>
+                    </el-table-column>
+    
+                </el-table>
+
+            </el-row>
+
+        </el-tab-pane>
+
+        <el-tab-pane label="Vendedores" name="second">
+
+            <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+
+                <el-table :data="currentSellersView" size="mini" height="70vh" style="margin-top: 15px;">
+
+                    <el-table-column
+                    v-for="column in columnsSellers"
+                    :key="column.id"
+                    :label="column.label"
+                    :prop="column.prop"
+                    :width="column.width"
+                    />
+
+                    <el-table-column width="140">
+                        <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            @click="editSeller(scope.row)"
+                            type="primary"
+                            icon="el-icon-edit"
+                            circle
+                            title="Editar"
+                        ></el-button>
+                        <el-button
+                            size="mini"
+                            @click="deleteSeller(scope.row)"
+                            type="danger"
+                            icon="el-icon-delete"
+                            circle
+                            title="Eliminar"
+                        ></el-button>
+                        </template>
+                    </el-table-column>
+
+                </el-table>
+    
+            </el-row>
+
+        </el-tab-pane>
+
+    </el-tabs>
+
+
+    <!-- Dialog de Edit User -->
+    <el-dialog
+    :title="editUserTitle"
+    :visible.sync="dialogEditUserVisible"
+    width="30%"
+    >
+        <el-form
+        :model="editUserForm"
+        :rules="editUserForm.rules"
+        ref="editUserForm"
+        size="mini"
+        style="text-align: left"
+        >
+            <el-row :gutter="8">
+                <el-form-item label="Nombre" prop="nombre">
+                    <el-input maxlength="30" v-model="editUserForm.nombre" />
+                </el-form-item>
+            </el-row>
+            <el-row :gutter="8">
+                <el-form-item label="Apellido" prop="apellido">
+                    <el-input maxlength="30" v-model="editUserForm.apellido" />
+                </el-form-item>
+            </el-row>
+            <el-row :gutter="8">
+                <el-form-item label="Email" prop="email">
+                    <el-input maxlength="30" v-model="editUserForm.email" />
+                </el-form-item>
+            </el-row>
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="dialogEditUserVisible = false">
+                Cancelar
+            </el-button>
+            <el-button type="primary" size="mini" @click="submitEditUser()">
+                Guardar
+            </el-button>
+        </span>
+    </el-dialog>
+
+
+    <!-- Dialog de Edit Seller -->
+    <el-dialog
+    :title="editSellerTitle"
+    :visible.sync="dialogEditSellerVisible"
+    width="30%"
+    >
+        <el-form
+        :model="editSellerForm"
+        :rules="editSellerForm.rules"
+        ref="editSellerForm"
+        size="mini"
+        style="text-align: left"
+        >
+            <el-row :gutter="8">
+                <el-form-item label="Razón Social" prop="razon_social">
+                    <el-input maxlength="30" v-model="editSellerForm.razon_social" />
+                </el-form-item>
+            </el-row>
+            <el-row :gutter="8">
+                <el-form-item label="Email" prop="email">
+                    <el-input maxlength="30" v-model="editSellerForm.email" />
+                </el-form-item>
+            </el-row>
+        </el-form>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="dialogEdiSellerVisible = false">
+                Cancelar
+            </el-button>
+            <el-button type="primary" size="mini" @click="submitEditSeller()">
+                Guardar
+            </el-button>
+        </span>
+    </el-dialog>
+
+
+    <!-- Dialog de create new user-->
+
+    <el-dialog
+    :title="newUserTitle"
+    :visible.sync="dialogNewUserVisible"
+    width="30%"
+    >
+    <el-form
+        :model="createUserForm"
+        ref="createUserForm"
+        size="mini"
+        :rules="editUserForm.rules"
+        style="text-align: left"
+    >
+        <el-row :gutter="8">
+            <el-form-item label="Nombre" prop="nombre">
+                <el-input maxlength="30" v-model="createUserForm.nombre" />
+            </el-form-item>
         </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Apellido" prop="apellido">
+                <el-input maxlength="30" v-model="createUserForm.apellido" />
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Email" prop="email">
+                <el-input maxlength="30" v-model="createUserForm.email" />
+            </el-form-item>
+        </el-row>
+    </el-form>
 
-    </div>
+    <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="cancelCreateUser">
+            Cancelar
+        </el-button>
+        <el-button type="primary" size="mini" @click="submitNewUser()">
+            Crear
+        </el-button>
+    </span>
+    </el-dialog>
+
+
+    <!-- Dialog de create new seller-->
+
+    <el-dialog
+    :title="newSellerTitle"
+    :visible.sync="dialogNewSellerVisible"
+    width="30%"
+    >
+    <el-form
+        :model="createSellerForm"
+        ref="createSellerForm"
+        size="mini"
+        :rules="editSellerForm.rules"
+        style="text-align: left"
+    >
+        <el-row :gutter="8">
+            <el-form-item label="Razón Social" prop="razon_social">
+                <el-input maxlength="30" v-model="createSellerForm.razon_social" />
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Email" prop="email">
+                <el-input maxlength="30" v-model="createSellerForm.email" />
+            </el-form-item>
+        </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="cancelCreateSeller">
+            Cancelar
+        </el-button>
+        <el-button type="primary" size="mini" @click="submitNewSeller()">
+            Crear
+        </el-button>
+    </span>
+    </el-dialog>
 
 </section>

@@ -19,13 +19,13 @@ export default {
 
       bus.$on('user-selected', (userType) => {
         if (userType == 0) {
-          this.disabledIndex1 = false;
+          this.disabledIndex1 = true;
           this.disabledIndex2 = false;
-          this.disabledIndex3 = false;
-          this.disabledIndex31 = false;
-          this.disabledIndex32 = false;
-          this.disabledIndex33 = false;
-          this.disabledIndex34 = false;
+          this.disabledIndex3 = true;
+          this.disabledIndex31 = true;
+          this.disabledIndex32 = true;
+          this.disabledIndex33 = true;
+          this.disabledIndex34 = true;
         } else if (userType == 1) {
           this.disabledIndex1 = false;
           this.disabledIndex2 = true;

@@ -15,7 +15,7 @@
     
             <el-col :span="12" style="padding: 15px;">
                 <el-button
-                    @click="dialogLoginVisible=true"
+                    @click="dialogSingupVisible=true"
                     type="warning"
                     size="medium"
                     style="float: right;"
@@ -40,7 +40,7 @@
     <!-- Dialog Log In -->
     <el-dialog :title="titleLoginDialog" :visible.sync="dialogLoginVisible" width="20%">
 
-        <el-form :model="selectUserForm" :rules="rules" ref="refSelectUserForm" size="mini">
+        <el-form :model="selectUserForm" :rules="selectUserForm.rules" ref="refSelectUserForm" size="mini">
 
             <el-row style="text-align: left">
 
@@ -90,7 +90,7 @@
 
         <span slot="footer" class="dialog-footer">
             <el-button size="mini" @click="closeDialogLogin">Cancelar</el-button>
-            <el-button size="mini" @click="submitUser" type="primary" style>Guardar</el-button>
+            <el-button size="mini" @click="submitUser" type="primary" style>Seleccionar</el-button>
         </span>
 
     </el-dialog>
@@ -98,59 +98,110 @@
     <!-- Dialog Sign Up -->
     <el-dialog :title="titleSignupDialog" :visible.sync="dialogSingupVisible" width="20%">
 
-        <el-form :model="newUserForm" :rules="rules" ref="refNewUserForm" size="mini">
-
-            <el-row style="text-align: left">
-
-                <el-form-item :label="titleUserType" prop="type">
-
-                    <el-select
+        <el-row>
+            <el-col>
+                <el-button
+                    @click="dialogNewUserVisible=true"
+                    type="warning"
                     size="mini"
-                    :placeholder="placeholderUserType"
-                    v-model="newUserForm.type"
-                    @change="selectUserType"
-                    >
-                        <el-option
-                        v-for="item in userType"
-                        :key="item.key"
-                        :label="item.label"
-                        :value="item.key"
-                        ></el-option>
-                    </el-select>
-
-                </el-form-item>
-
-            </el-row>
-
-            <el-row style="text-align: left">
-
-                <el-form-item :label="titleUserName" prop="name">
-
-                    <el-select
+                    style="margin-right: 5px;"
+                >
+                    Nuevo Usuario
+                </el-button>
+                <el-button
+                    @click="dialogNewSellerVisible=true"
+                    type="warning"
                     size="mini"
-                    :placeholder="placeholderUserName"
-                    :disabled="disabledUserName"
-                    v-model="newUserForm.name"
-                    >
-                        <el-option
-                        v-for="item in users"
-                        :key="item.key"
-                        :label="item.label"
-                        :value="item.key"
-                        ></el-option>
-                    </el-select>
-
-                </el-form-item>
-
-            </el-row>
-
-        </el-form>
+                >
+                    Nuevo Vendedor
+                </el-button>
+            </el-col>
+    
+        </el-row>
 
         <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="closeDialogSignup">Cancelar</el-button>
-            <el-button size="mini" @click="submitUser" type="primary" style>Crear</el-button>
+            <el-button size="mini" @click="closeDialogSignup">Cerrar</el-button>
         </span>
 
+    </el-dialog>
+
+
+    <!-- Dialog de create new user-->
+
+    <el-dialog
+    :title="newUserTitle"
+    :visible.sync="dialogNewUserVisible"
+    width="30%"
+    >
+    <el-form
+        :model="createUserForm"
+        ref="createUserForm"
+        size="mini"
+        :rules="editUserForm.rules"
+        style="text-align: left"
+    >
+        <el-row :gutter="8">
+            <el-form-item label="Nombre" prop="nombre">
+                <el-input maxlength="30" v-model="createUserForm.nombre" />
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Apellido" prop="apellido">
+                <el-input maxlength="30" v-model="createUserForm.apellido" />
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Email" prop="email">
+                <el-input maxlength="30" v-model="createUserForm.email" />
+            </el-form-item>
+        </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="cancelCreateUser">
+            Cancelar
+        </el-button>
+        <el-button type="primary" size="mini" @click="submitNewUser()">
+            Crear
+        </el-button>
+    </span>
+    </el-dialog>
+
+
+    <!-- Dialog de create new seller-->
+
+    <el-dialog
+    :title="newSellerTitle"
+    :visible.sync="dialogNewSellerVisible"
+    width="30%"
+    >
+    <el-form
+        :model="createSellerForm"
+        ref="createSellerForm"
+        size="mini"
+        :rules="editSellerForm.rules"
+        style="text-align: left"
+    >
+        <el-row :gutter="8">
+            <el-form-item label="Razón Social" prop="razon_social">
+                <el-input maxlength="30" v-model="createSellerForm.razon_social" />
+            </el-form-item>
+        </el-row>
+        <el-row :gutter="8">
+            <el-form-item label="Email" prop="email">
+                <el-input maxlength="30" v-model="createSellerForm.email" />
+            </el-form-item>
+        </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="cancelCreateSeller">
+            Cancelar
+        </el-button>
+        <el-button type="primary" size="mini" @click="submitNewSeller()">
+            Crear
+        </el-button>
+    </span>
     </el-dialog>
 
 </section>

@@ -24,20 +24,77 @@ export default {
       disabledUserName: true,
       selectUserForm: {
         type: '',
-        name: ''
+        name: '',
+        rules: {
+          type: [
+              {required: true, message: "Debe seleccionar un tipo de Usuario", trigger: 'blur'},
+          ],
+          name: [
+              {required: true, message: "Debe seleccionar un Usuario", trigger: 'blur'}
+          ],
+        }
       },
-      newUserForm: {
-        type: '',
-        name: ''
+      newUserTitle: "Nuevo Usuario",
+      createUserForm: {
+        nombre: '',
+        apellido: '',
+        email: '',
+        activo: true,
       },
-      rules: {
-        type: [
-            {required: true, message: "Debe seleccionar un tipo de Usuario", trigger: 'blur'},
-        ],
-        name: [
-            {required: true, message: "Debe seleccionar un Usuario", trigger: 'blur'}
-        ],
+      dialogNewUserVisible: false,
+      newSellerTitle: "Nuevo Vendedor",
+      createSellerForm: {
+        razon_social: '',
+        email: '',
+        activo: true,
       },
+      dialogNewSellerVisible: false,
+      editUserForm: {
+        rules: {
+          nombre: [
+            {
+              required: true,
+              message: "Debe elegir un nombre",
+              trigger: 'blur',
+            },
+          ],
+          apellido: [
+            {
+              required: true,
+              message: "Debe elegir un apellido",
+              trigger: 'blur',
+            },
+          ],
+          email: [
+            {
+              required: true,
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Debe elegir un email con el formato: abc@abc.com",
+              trigger: 'blur',
+            },
+          ],
+        },
+      },
+      editSellerForm: {
+        rules: {
+          razon_social: [
+            {
+              required: true,
+              message: "Debe elegir un nombre como razón social",
+              trigger: 'blur',
+            },
+          ],
+          email: [
+            {
+              required: true,
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: "Debe elegir un email con el formato: abc@abc.com",
+              trigger: 'blur',
+            },
+          ],
+        },
+      },
+
     }
   },
   methods: {
@@ -49,9 +106,7 @@ export default {
     },
 
     closeDialogSignup() {
-      this.$refs.refNewUserForm.resetFields()
       this.dialogSingupVisible =  false;
-      this.disabledUserName = true;
     },
 
     submitUser() {
@@ -85,9 +140,6 @@ export default {
         } else if (this.selectUserForm.type == 1) {
           chunkUrl = process.env.VUE_APP_URL + "usuarios";
           let usersAux = await APIHandler.get(chunkUrl);
-          /* eslint-disable no-console */
-          console.log(usersAux);                                         //BORRAR!!!!!
-          /* eslint-enable no-console */
           for (var i1 = 0; i1 < usersAux.length; i1++) {
             let data = [
               {
@@ -100,9 +152,6 @@ export default {
         } else if (this.selectUserForm.type == 2) {
           chunkUrl = process.env.VUE_APP_URL + "vendedores";
           let usersAux = await APIHandler.get(chunkUrl);
-          /* eslint-disable no-console */
-          console.log(usersAux);                                         //BORRAR!!!!!
-          /* eslint-enable no-console */
           for (var i2 = 0; i2 < usersAux.length; i2++) {
             let data = [
               {
@@ -121,6 +170,67 @@ export default {
           this.disabledUserName = false;
           this.loading = false;
       }
+    },
+
+    cancelCreateUser() {
+      this.dialogNewUserVisible = false;
+      this.createUserForm = {
+        nombre: '',
+        apellido: '',
+        email: '',
+        activo: true,
+      };
+    },
+
+    cancelCreateSeller() {
+      this.dialogNewSellerVisible = false;
+      this.createSellerForm = {
+        razon_social: '',
+        email: '',
+        activo: true,
+      };
+    },
+
+    async submitNewUser() {
+      this.$refs.createUserForm.validate(async (validate) => {
+        if (validate) {
+          try {
+            const chunkUrl = process.env.VUE_APP_URL + 'usuarios';
+            await APIHandler.create(chunkUrl, this.createUserForm);
+            this.$message({
+              type: 'success',
+              message: "El usuario fue creado con exito",
+            });
+            this.cancelCreateUser();
+
+          } catch (error) {
+            exceptionHandler.exceptionWarning("Error: No se pudo crear el usuario", error);
+          }
+        } else {
+          return false;
+        }
+      });
+    },
+
+    async submitNewSeller() {
+      this.$refs.createSellerForm.validate(async (validate) => {
+        if (validate) {
+          try {
+            const chunkUrl = process.env.VUE_APP_URL + 'vendedores';
+            await APIHandler.create(chunkUrl, this.createSellerForm);
+            this.$message({
+              type: 'success',
+              message: "El vendedor fue creado con exito",
+            });
+            this.cancelCreateSeller();
+
+          } catch (error) {
+            exceptionHandler.exceptionWarning("Error: No se pudo crear el vendedor", error);
+          }
+        } else {
+          return false;
+        }
+      });
     },
 
   },
