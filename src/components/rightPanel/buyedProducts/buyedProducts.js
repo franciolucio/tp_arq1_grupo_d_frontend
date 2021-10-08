@@ -10,9 +10,13 @@ export default {
         buyedProducts: [],
         columnsBuyedProducts: [
           {prop: 'id', label: 'ID', width: '75'},
-          {prop: 'cantidad', label: 'Cantidad', width: 'auto'},
-          {prop: 'fecha_de_compra', label: 'Fecha de Compra', width: 'auto'},
-          {prop: 'id_producto', label: 'Producto', width: 'auto'}
+          {prop: 'nombre', label: 'Nombre', width: 'auto'},
+          {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
+          {prop: 'precio', label: 'Precio', width: 'auto'},
+          {prop: 'stock', label: 'Stock', width: 'auto'},
+          {prop: 'id_vendedor', label: 'Vendedor', width: 'auto'},
+          {prop: 'nuevo', label: 'Nuevo', width: 'auto'},
+          {prop: 'id_categoria', label: 'Categoria', width: 'auto'}
         ],
         buyedProductsPages: 1,
         pageSizes: [12, 15, 50, 100],
