@@ -8,6 +8,7 @@ import VueRouter from 'vue-router';
 import inicioView from './components/rightPanel/inicioView/index';
 import usersData from './components/rightPanel/usersData/index';
 import userInfo from './components/rightPanel/userInfo/index';
+import sellerInfo from './components/rightPanel/sellerInfo/index';
 import productsToSell from './components/rightPanel/productsToSell/index';
 import soldProducts from './components/rightPanel/soldProducts/index';
 import productsToBuy from './components/rightPanel/productsToBuy/index';
@@ -30,9 +31,14 @@ const routes = [
         component: usersData
     },
     { 
-        path: '/userInfo',
+        path: '/userInfo/:id',
         name: 'userInfo',
         component: userInfo
+    },
+    { 
+        path: '/sellerInfo/:id',
+        name: 'sellerInfo',
+        component: sellerInfo
     },
     { 
         path: '/productsToSell',

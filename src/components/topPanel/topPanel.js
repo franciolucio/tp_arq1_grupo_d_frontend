@@ -7,6 +7,7 @@ export default {
   components: {},
   data() {
     return {
+      currentID: 0,
       titleLoginDialog: "Log In",
       titleSignupDialog: "Sing Up",
       dialogLoginVisible: false,
@@ -114,7 +115,7 @@ export default {
         if(validate) {
             try {
                 this.dialogLoginVisible = false;
-                bus.$emit('user-selected', this.selectUserForm.type);
+                bus.$emit('user-selected', this.selectUserForm.type, this.currentID);
             } catch(error) {
                 exceptionHandler.exceptionWarning("User selection error", error);
             }
@@ -122,6 +123,10 @@ export default {
             return false;
         }
       });
+    },
+
+    async loadUser(event) {
+      this.currentID = event;
     },
 
     async selectUserType() {

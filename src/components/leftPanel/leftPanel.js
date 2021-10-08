@@ -5,7 +5,9 @@ export default {
     components: {},
     data() {
       return {
-        disabledIndex1 : true,
+        currentId: 0,
+        disabledIndex11 : true,
+        disabledIndex12 : true,
         disabledIndex2 : true,
         disabledIndex3 : true,
         disabledIndex31 : true,
@@ -17,9 +19,11 @@ export default {
     computed: {},
     mounted() {
 
-      bus.$on('user-selected', (userType) => {
+      bus.$on('user-selected', (userType, id) => {
+        this.currentId = id;
         if (userType == 0) {
-          this.disabledIndex1 = true;
+          this.disabledIndex11 = true;
+          this.disabledIndex12 = true;
           this.disabledIndex2 = false;
           this.disabledIndex3 = true;
           this.disabledIndex31 = true;
@@ -27,7 +31,8 @@ export default {
           this.disabledIndex33 = true;
           this.disabledIndex34 = true;
         } else if (userType == 1) {
-          this.disabledIndex1 = false;
+          this.disabledIndex11 = false;
+          this.disabledIndex12 = true;
           this.disabledIndex2 = true;
           this.disabledIndex3 = false;
           this.disabledIndex31 = true;
@@ -35,7 +40,8 @@ export default {
           this.disabledIndex33 = false;
           this.disabledIndex34 = false;
         } else if (userType == 2) {
-          this.disabledIndex1 = false;
+          this.disabledIndex11 = true;
+          this.disabledIndex12 = false;
           this.disabledIndex2 = true;
           this.disabledIndex3 = false;
           this.disabledIndex31 = false;
@@ -43,7 +49,8 @@ export default {
           this.disabledIndex33 = true;
           this.disabledIndex34 = true;
         } else {
-          this.disabledIndex1 = true;
+          this.disabledIndex11 = true;
+          this.disabledIndex12 = true;
           this.disabledIndex2 = true;
           this.disabledIndex3 = true;
           this.disabledIndex31 = true;
@@ -66,7 +73,21 @@ export default {
       },
 
       async goToUserInfo() {
-        this.$router.push('/userInfo');
+        this.$router.push({
+          name: "userInfo",
+          params:{
+            id: this.currentId,
+          }
+        });
+      },
+
+      async goToSellerInfo() {
+        this.$router.push({
+          name: "sellerInfo",
+          params:{
+            id: this.currentId,
+          }
+        });
       },
 
       async goToProductsToSell() {

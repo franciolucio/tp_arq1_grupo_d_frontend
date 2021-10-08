@@ -2,29 +2,21 @@ import * as APIHandler from '../../../../utils/APIHandler';
 import * as exceptionHandler from '../../../../utils/exceptionHandler';
 
 export default {
-    name: 'userInfo',
+    name: 'sellerInfo',
     components: {},
     data() {
       return {
         currentId: this.$route.params.id,
-        editUserForm: {
+        editSellerForm: {
           id: null,
-          nombre: null,
-          apellido: null,
+          razon_social: null,
           email: null,
           activo: true,
           rules: {
-            nombre: [
+            razon_social: [
               {
                 required: true,
-                message: "Debe elegir un nombre",
-                trigger: 'blur',
-              },
-            ],
-            apellido: [
-              {
-                required: true,
-                message: "Debe elegir un apellido",
+                message: "Debe elegir un nombre como razón social",
                 trigger: 'blur',
               },
             ],
@@ -44,24 +36,23 @@ export default {
     mounted() {},
     async created() {
 
-      let chunkUrl = process.env.VUE_APP_URL + "usuarios/" + this.currentId;
+      let chunkUrl = process.env.VUE_APP_URL + "vendedores/" + this.currentId;
       let user = await APIHandler.get(chunkUrl);
-      this.editUserForm.id = user.id;
-      this.editUserForm.nombre = user.nombre;
-      this.editUserForm.apellido = user.apellido;
-      this.editUserForm.email = user.email;
+      this.editSellerForm.id = user.id;
+      this.editSellerForm.razon_social = user.razon_social;
+      this.editSellerForm.email = user.email;
 
     },
     methods: {
 
-      async submitEditUser() {
-        this.$refs.editUserForm.validate(async (validate) => {
+      async submitEditSeller() {
+        this.$refs.editSellerForm.validate(async (validate) => {
           if (validate) {
             try {
-              let id = this.editUserForm.id;
-              const chunkUrl = process.env.VUE_APP_URL + 'usuarios/' + id;
+              let id = this.editSellerForm.id;
+              const chunkUrl = process.env.VUE_APP_URL + 'vendedores/' + id;
   
-              await APIHandler.update(chunkUrl, this.editUserForm);
+              await APIHandler.update(chunkUrl, this.editSellerForm);
               this.$message({
                 type: 'success',
                 message: "El usuario fue modificado con exito",
@@ -75,7 +66,7 @@ export default {
         });
       },
 
-      async deleteUser() {
+      async deleteSeller() {
         await this.$confirm(
           `¿Esta seguro que quiere eliminar su usuario?`,
           '¡Cuidado!',
@@ -86,7 +77,7 @@ export default {
           }
         )
         .then(async () => {
-          let url = process.env.VUE_APP_URL + 'usuarios/' + this.currentId;
+          let url = process.env.VUE_APP_URL + 'vendedores/' + this.currentId;
   
           await APIHandler.remove(url);
           this.$message.success({
