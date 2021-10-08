@@ -6,4 +6,19 @@
 
   <el-divider></el-divider>
 
+  <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+
+    <el-table :data="currentSoldProductsView" size="mini" height="70vh" style="margin-top: 15px;">
+
+        <el-table-column
+        v-for="column in columnsSoldProducts"
+        :key="column.id"
+        :label="column.label"
+        :prop="column.prop"
+        :width="column.width"
+        />
+
+    </el-table>
+
+  </el-row>
 </section>
