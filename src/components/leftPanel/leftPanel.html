@@ -12,9 +12,14 @@
             <span>Inicio</span>
         </el-menu-item>
 
-        <el-menu-item index="1" @click="goToUserInfo" :hidden="disabledIndex1">
+        <el-menu-item index="1.1" @click="goToUserInfo" :hidden="disabledIndex11">
             <i class="el-icon-location"></i>
             <span>Datos del Usuario</span>
+        </el-menu-item>
+
+        <el-menu-item index="1.2" @click="goToSellerInfo" :hidden="disabledIndex12">
+            <i class="el-icon-location"></i>
+            <span>Datos del Vendedor</span>
         </el-menu-item>
 
         <el-menu-item index="2" @click="goToUsersData" :hidden="disabledIndex2">

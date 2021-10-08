@@ -73,6 +73,7 @@
                     :placeholder="placeholderUserName"
                     :disabled="disabledUserName"
                     v-model="selectUserForm.name"
+                    @change="loadUser($event)"
                     >
                         <el-option
                         v-for="item in users"
