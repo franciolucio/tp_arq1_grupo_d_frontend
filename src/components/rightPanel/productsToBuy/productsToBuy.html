@@ -18,8 +18,70 @@
           :width="column.width"
           />
 
+          <el-table-column width="140">
+            <template slot-scope="scope">
+            <el-button
+                @click="buyProduct(scope.row)"
+                type="success"
+                title="Comprar"
+                round
+            >
+            Comprar
+          </el-button>
+            </template>
+        </el-table-column>
+
       </el-table>
 
   </el-row>
+
+
+  <!-- Dialog de buy product-->
+
+  <el-dialog
+  title="Comprar Producto"
+  :visible.sync="dialogbuyProductVisible"
+  width="30%"
+  >
+  <el-form
+      :model="productForm"
+      ref="productForm"
+      size="mini"
+      style="text-align: left"
+  >
+
+    <el-row :gutter="20">
+      <el-col :span="16">
+          <el-form-item label="Producto" prop="nombre">
+              <el-input maxlength="30" v-model="productForm.nombre" :disabled="true" />
+          </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-form-item label="Cantidad" prop="stock">
+          <el-select
+          size="mini"
+          v-model="productForm.cantidad"
+          >
+              <el-option
+              v-for="item in cantidadDisponible"
+              :key="item.key"
+              :label="item.label"
+              :value="item.key"
+              ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+  </el-form>
+
+  <span slot="footer" class="dialog-footer">
+      <el-button size="mini" @click="cancelBuyProduct">
+          Cancelar
+      </el-button>
+      <el-button type="primary" size="mini" @click="submitBoyProduct()">
+          Comprar
+      </el-button>
+  </span>
+  </el-dialog>
 
 </section>
