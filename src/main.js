@@ -41,22 +41,22 @@ const routes = [
         component: sellerInfo
     },
     { 
-        path: '/productsToSell',
+        path: '/productsToSell/:id',
         name: 'productsToSell',
         component: productsToSell
     },
     { 
-        path: '/soldProducts',
+        path: '/soldProducts/:id',
         name: 'soldProducts',
         component: soldProducts
     },
     { 
-        path: '/productsToBuy',
+        path: '/productsToBuy/:id',
         name: 'productsToBuy',
         component: productsToBuy
     },
     { 
-        path: '/buyedProducts',
+        path: '/buyedProducts/:id',
         name: 'buyedProducts',
         component: buyedProducts
     }

@@ -91,19 +91,39 @@ export default {
       },
 
       async goToProductsToSell() {
-        this.$router.push('/productsToSell');
+        this.$router.push({
+          name: "productsToSell",
+          params:{
+            id: this.currentId,
+          }
+        });
       },
 
       async goToSoldProducts() {
-        this.$router.push('/soldProducts');
+        this.$router.push({
+          name: "soldProducts",
+          params:{
+            id: this.currentId,
+          }
+        });
       },
 
       async goToProductsToBuy() {
-        this.$router.push('/productsToBuy');
+        this.$router.push({
+          name: "productsToBuy",
+          params:{
+            id: this.currentId,
+          }
+        });
       },
 
-      async goToBuyedProducts() {
-        this.$router.push('/buyedProducts');
+      async goToBuyedProducts() {        
+        this.$router.push({
+          name: "buyedProducts",
+          params:{
+            id: this.currentId,
+          }
+        });
       },
 
     },
