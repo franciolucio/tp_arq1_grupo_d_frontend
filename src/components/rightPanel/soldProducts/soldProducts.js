@@ -15,9 +15,11 @@ export default {
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
-          {prop: 'stock', label: 'Cantidad', width: '100'},
+          {prop: 'cantidad', label: 'Cantidad', width: '100'},
           {prop: 'nuevo', label: 'Nuevo', width: '85'},
-          {prop: 'id_categoria', label: 'Categoria', width: '200'}
+          {prop: 'tipo_categoria', label: 'Categoria', width: 'auto'},
+          {prop: 'usuario_comprador', label: 'Comprador', width: 'auto'},
+          {prop: 'fecha_compra', label: 'Fecha', width: 'auto'},
         ],
         soldProductsPages: 1,
         pageSizes: [12, 15, 50, 100],

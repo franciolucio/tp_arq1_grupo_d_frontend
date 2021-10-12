@@ -13,7 +13,6 @@ export default {
           nombre: null,
           apellido: null,
           email: null,
-          activo: true,
           rules: {
             nombre: [
               {

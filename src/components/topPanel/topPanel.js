@@ -42,14 +42,12 @@ export default {
         nombre: '',
         apellido: '',
         email: '',
-        activo: true,
       },
       dialogNewUserVisible: false,
       newSellerTitle: "Nuevo Vendedor",
       createSellerForm: {
         razon_social: '',
         email: '',
-        activo: true,
       },
       dialogNewSellerVisible: false,
       editUserForm: {
@@ -203,7 +201,6 @@ export default {
         nombre: '',
         apellido: '',
         email: '',
-        activo: true,
       };
     },
 
@@ -212,7 +209,6 @@ export default {
       this.createSellerForm = {
         razon_social: '',
         email: '',
-        activo: true,
       };
     },
 
