@@ -110,7 +110,7 @@ export default {
       this.dialogSingupVisible =  false;
     },
 
-    submitUser() {
+    logInUser() {
       this.$refs.refSelectUserForm.validate(async(validate) => {
         if(validate) {
             try {
