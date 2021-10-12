@@ -104,12 +104,17 @@ export default {
         };
       },
 
-      submitBoyProduct() {
+      submitBuyProduct() {
         this.$refs.productForm.validate(async (validate) => {
           if (validate) {
             try {
               const chunkUrl = process.env.VUE_APP_URL + 'eventos';
-              await APIHandler.create(chunkUrl, this.productForm);
+              let product = {
+                id_usuario_comprador: this.productForm.id_usuario_comprador,
+                id_producto: this.productForm.id_producto,
+                cantidad: this.productForm.cantidad,
+              };
+              await APIHandler.create(chunkUrl, product);
               this.$message({
                 type: 'success',
                 message: "El producto fue comprado con exito",
@@ -128,6 +133,7 @@ export default {
 
       async updateProductsRowTable() {
         await this.getProductsToBuy();
+        this.forceRerender();
       },
 
     },

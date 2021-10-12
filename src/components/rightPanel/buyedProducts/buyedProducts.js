@@ -19,7 +19,7 @@ export default {
           {prop: 'nuevo', label: 'Nuevo', width: '85'},
           {prop: 'tipo_categoria', label: 'Categoria', width: 'auto'},
           {prop: 'nombre_vendedor', label: 'Vendedor', width: 'auto'},
-          {prop: 'fecha_de_compra', label: 'Fecha', width: 'auto'},
+          {prop: 'fecha_compra', label: 'Fecha', width: 'auto'},
         ],
         buyedProductsPages: 1,
         pageSizes: [12, 15, 50, 100],

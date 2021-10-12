@@ -166,6 +166,7 @@ export default {
 
       async updateProductsRowTable() {
         await this.getProductsToSell();
+        this.forceRerender();
       },
 
       async getCategories() {
