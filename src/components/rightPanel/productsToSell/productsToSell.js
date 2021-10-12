@@ -17,7 +17,7 @@ export default {
           {prop: 'precio', label: 'Precio', width: '100'},
           {prop: 'stock', label: 'Stock', width: '80'},
           {prop: 'nuevo', label: 'Nuevo', width: '85'},
-          {prop: 'id_categoria', label: 'Categoria', width: '200'}
+          {prop: 'tipo_categoria', label: 'Categoria', width: 'auto'}
         ],
         productsToSellPages: 1,
         pageSizes: [12, 15, 50, 100],
@@ -32,7 +32,6 @@ export default {
           nuevo: true,
           id_categoria: "",
           id_vendedor: this.$route.params.id,
-          activo: true,
         },
         editProductForm: {
           rules: {
@@ -140,7 +139,6 @@ export default {
           nuevo: true,
           id_categoria: "",
           id_vendedor: this.$route.params.id,
-          activo: true,
         };
       },
   

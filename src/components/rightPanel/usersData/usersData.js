@@ -31,7 +31,6 @@ export default {
         nombre: null,
         apellido: null,
         email: null,
-        activo: true,
         rules: {
           nombre: [
             {
@@ -63,7 +62,6 @@ export default {
         id: null,
         razon_social: null,
         email: null,
-        activo: true,
         rules: {
           razon_social: [
             {
@@ -89,14 +87,12 @@ export default {
         nombre: '',
         apellido: '',
         email: '',
-        activo: true,
       },
       dialogNewUserVisible: false,
       newSellerTitle: "Nuevo Vendedor",
       createSellerForm: {
         razon_social: '',
         email: '',
-        activo: true,
       },
       dialogNewSellerVisible: false,
     };
@@ -294,7 +290,6 @@ export default {
         nombre: '',
         apellido: '',
         email: '',
-        activo: true,
       };
     },
 
@@ -303,7 +298,6 @@ export default {
       this.createSellerForm = {
         razon_social: '',
         email: '',
-        activo: true,
       };
     },
 

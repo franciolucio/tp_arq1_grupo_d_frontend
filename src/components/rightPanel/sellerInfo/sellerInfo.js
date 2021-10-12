@@ -12,7 +12,6 @@ export default {
           id: null,
           razon_social: null,
           email: null,
-          activo: true,
           rules: {
             razon_social: [
               {

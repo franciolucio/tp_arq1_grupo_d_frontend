@@ -16,9 +16,9 @@ export default {
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
           {prop: 'stock', label: 'Stock', width: '80'},
-          {prop: 'id_vendedor', label: 'Vendedor', width: 'auto'},
           {prop: 'nuevo', label: 'Nuevo', width: '85'},
-          {prop: 'id_categoria', label: 'Categoria', width: '200'}
+          {prop: 'tipo_categoria', label: 'Categoria', width: 'auto'},
+          {prop: 'nombre_vendedor', label: 'Vendedor', width: 'auto'},
         ],
         productsToBuyPages: 1,
         pageSizes: [12, 15, 50, 100],
