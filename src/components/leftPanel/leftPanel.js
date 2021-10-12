@@ -65,11 +65,11 @@ export default {
     methods: {
 
       async goToInicioView() {
-        this.$router.push('/');
+        this.$router.push('/').catch(()=>{});
       },
 
       async goToUsersData() {
-        this.$router.push('/usersData');
+        this.$router.push('/usersData').catch(()=>{});
       },
 
       async goToUserInfo() {
@@ -78,7 +78,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
       async goToSellerInfo() {
@@ -87,7 +87,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
       async goToProductsToSell() {
@@ -96,7 +96,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
       async goToSoldProducts() {
@@ -105,7 +105,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
       async goToProductsToBuy() {
@@ -114,7 +114,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
       async goToBuyedProducts() {        
@@ -123,7 +123,7 @@ export default {
           params:{
             id: this.currentId,
           }
-        });
+        }).catch(()=>{});
       },
 
     },

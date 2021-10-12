@@ -14,23 +14,39 @@
             </el-col>
     
             <el-col :span="12" style="padding: 15px;">
-                <el-button
-                    @click="dialogSingupVisible=true"
-                    type="warning"
-                    size="medium"
-                    style="float: right;"
-                >
-                    SIGN UP
-                </el-button>
-
-                <el-button
-                    @click="dialogLoginVisible=true"
-                    type="warning"
-                    size="medium"
-                    style="float: right;margin-right: 15px;"
-                >
-                    LOG IN
-                </el-button>
+                <div id="signUpButton">
+                    <el-button
+                        @click="dialogSingupVisible=true"
+                        type="warning"
+                        size="medium"
+                        style="float: right;"
+                        v-if="logInShow"
+                    >
+                        SIGN UP
+                    </el-button>
+                </div>
+                <div id="logInButton">
+                    <el-button
+                        @click="dialogLoginVisible=true"
+                        type="warning"
+                        size="medium"
+                        style="float: right;margin-right: 15px;"
+                        v-if="logInShow"
+                    >
+                        LOG IN
+                    </el-button>
+                </div>
+                <div id="logOutButton">
+                    <el-button
+                        @click="logOut()"
+                        type="warning"
+                        size="medium"
+                        style="float: right;"
+                        v-if="!logInShow"
+                    >
+                        LOG OUT
+                    </el-button>
+                </div>
             </el-col>
 
         </el-row>
@@ -38,7 +54,7 @@
     </el-card>
 
     <!-- Dialog Log In -->
-    <el-dialog :title="titleLoginDialog" :visible.sync="dialogLoginVisible" width="20%">
+    <el-dialog :title="titleLoginDialog" :visible.sync="dialogLoginVisible" width="20%" :key="componentKey">
 
         <el-form :model="selectUserForm" :rules="selectUserForm.rules" ref="refSelectUserForm" size="mini">
 

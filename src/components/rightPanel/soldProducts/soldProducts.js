@@ -15,7 +15,7 @@ export default {
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
-          {prop: 'stock', label: 'Stock', width: '80'},
+          {prop: 'stock', label: 'Cantidad', width: '100'},
           {prop: 'nuevo', label: 'Nuevo', width: '85'},
           {prop: 'id_categoria', label: 'Categoria', width: '200'}
         ],
