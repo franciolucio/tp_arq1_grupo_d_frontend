@@ -7,7 +7,9 @@ export default {
   components: {},
   data() {
     return {
+      componentKey: 0,
       currentID: 0,
+      logInShow: true,
       titleLoginDialog: "Log In",
       titleSignupDialog: "Sing Up",
       dialogLoginVisible: false,
@@ -98,7 +100,24 @@ export default {
 
     }
   },
+  mounted() {
+
+    bus.$on('user-logOut', () => {
+      this.logInShow = true;
+      this.$router.push('/').catch(()=>{});
+      bus.$emit('user-selected', -1, -1);
+      this.forceRerender();
+    });
+
+  },
   methods: {
+
+    forceRerender() { 
+      this.componenteKey += 1; 
+      this.selectUserForm.type = '';
+      this.selectUserForm.name = '';
+      this.disabledUserName = true;
+    },
 
     closeDialogLogin() {
       this.$refs.refSelectUserForm.resetFields();
@@ -110,11 +129,12 @@ export default {
       this.dialogSingupVisible =  false;
     },
 
-    submitUser() {
+    logInUser() {
       this.$refs.refSelectUserForm.validate(async(validate) => {
         if(validate) {
             try {
                 this.dialogLoginVisible = false;
+                this.logInShow = false;
                 bus.$emit('user-selected', this.selectUserForm.type, this.currentID);
             } catch(error) {
                 exceptionHandler.exceptionWarning("User selection error", error);
@@ -235,6 +255,27 @@ export default {
         } else {
           return false;
         }
+      });
+    },
+
+    async logOut() {
+      await this.$confirm(
+        `¿Esta seguro que desea salir del sistema?`,
+        '¡Cuidado!',
+        {
+          confirmButtonText: 'SI',
+          cancelButtonText: 'NO',
+          type: 'warning',
+        }
+      )
+      .then(async () => {
+        this.logInShow = true;
+        this.$router.push('/').catch(()=>{});
+        bus.$emit('user-selected', -1, -1);
+        this.forceRerender();
+      })
+      .catch((error) => {
+        exceptionHandler.exceptionWarning("Error al eliminar el usuario", error);
       });
     },
 

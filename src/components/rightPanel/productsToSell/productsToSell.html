@@ -21,7 +21,7 @@
 </el-row>
   <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-    <el-table :data="currentProductsToSellView" size="mini" height="70vh" style="margin-top: 15px;">
+    <el-table :data="currentProductsToSellView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
         <el-table-column
         v-for="column in columnsProductsToSell"
@@ -29,6 +29,7 @@
         :label="column.label"
         :prop="column.prop"
         :width="column.width"
+        sortable
         />
 
     </el-table>

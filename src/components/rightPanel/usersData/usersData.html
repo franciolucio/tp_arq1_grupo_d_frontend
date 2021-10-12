@@ -27,13 +27,13 @@
 
     </el-row>
 
-    <el-tabs v-model="activeName" @tab-click="">
+    <el-tabs v-model="activeName" @tab-click="" :key="componentKey">
 
         <el-tab-pane label="Usuarios" name="first">
 
             <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-                <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;">
+                <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}">
 
                     <el-table-column
                     v-for="column in columnsUsers"
@@ -41,6 +41,7 @@
                     :label="column.label"
                     :prop="column.prop"
                     :width="column.width"
+                    sortable
                     />
 
                     <el-table-column width="140">
@@ -74,7 +75,7 @@
 
             <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-                <el-table :data="currentSellersView" size="mini" height="70vh" style="margin-top: 15px;">
+                <el-table :data="currentSellersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}">
 
                     <el-table-column
                     v-for="column in columnsSellers"
@@ -82,6 +83,7 @@
                     :label="column.label"
                     :prop="column.prop"
                     :width="column.width"
+                    sortable
                     />
 
                     <el-table-column width="140">

@@ -1,3 +1,4 @@
+import {bus} from '@/main';
 import * as APIHandler from '../../../../utils/APIHandler';
 import * as exceptionHandler from '../../../../utils/exceptionHandler';
 
@@ -84,7 +85,7 @@ export default {
             type: 'success',
             message: "El usuario ha sido eliminado con exito",
           });
-          this.$router.push('/');
+          bus.$emit('user-logOut');
         })
         .catch((error) => {
           exceptionHandler.exceptionWarning("Error al eliminar el usuario", error);

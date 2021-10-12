@@ -6,6 +6,7 @@ export default {
     components: {},
     data() {
       return {
+        componentKey: 0,
         currentId: this.$route.params.id,
         loading: false,
         soldProducts: [],
@@ -14,8 +15,8 @@ export default {
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
-          {prop: 'stock', label: 'Stock', width: '75'},
-          {prop: 'nuevo', label: 'Nuevo', width: '75'},
+          {prop: 'stock', label: 'Cantidad', width: '100'},
+          {prop: 'nuevo', label: 'Nuevo', width: '85'},
           {prop: 'id_categoria', label: 'Categoria', width: '200'}
         ],
         soldProductsPages: 1,
@@ -42,6 +43,10 @@ export default {
     },
     methods: {
 
+      forceRerender() { 
+        this.componenteKey += 1; 
+      },
+
       async getSoldProducts() {
         this.loading = true;
           try {
@@ -60,7 +65,6 @@ export default {
           } catch (error) {
               exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
           } finally {
-              await (new Promise(resolve => setTimeout(resolve, 2000)));        //BORRAR!!!!!
               this.loading = false;
           }
       },

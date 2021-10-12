@@ -6,6 +6,7 @@ export default {
   components: {},
   data() {
     return {
+      componentKey: 0,
       loading: false,
       users: [],
       columnsUsers: [
@@ -133,6 +134,10 @@ export default {
   },
   methods: {
 
+    forceRerender() { 
+      this.componenteKey += 1; 
+    },
+
     async getUsers() {
       this.loading = true;
         try {
@@ -141,7 +146,7 @@ export default {
         } catch (error) {
             exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
         } finally {
-            await (new Promise(resolve => setTimeout(resolve, 2000)));        //BORRAR!!!!!
+            this.forceRerender();
             this.loading = false;
         }
     },
@@ -154,6 +159,7 @@ export default {
         } catch (error) {
             exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
         } finally {
+            this.forceRerender();
             this.loading = false;
         }
     },
