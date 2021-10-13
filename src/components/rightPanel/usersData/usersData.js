@@ -131,7 +131,7 @@ export default {
   methods: {
 
     forceRerender() { 
-      this.componenteKey += 1; 
+      this.componentKey += 1; 
     },
 
     async getUsers() {

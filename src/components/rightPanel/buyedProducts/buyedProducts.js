@@ -6,7 +6,6 @@ export default {
     components: {},
     data() {
       return {
-        componentKey: 0,
         currentId: this.$route.params.id,
         loading: false,
         buyedProducts: [],
@@ -44,10 +43,6 @@ export default {
       this.getBuyedProducts();
     },
     methods: {
-
-      forceRerender() { 
-        this.componenteKey += 1; 
-      },
 
       async getBuyedProducts() {
         this.loading = true;

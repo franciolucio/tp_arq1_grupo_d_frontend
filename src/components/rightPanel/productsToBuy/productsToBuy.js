@@ -53,7 +53,7 @@ export default {
     methods: {
 
       forceRerender() { 
-        this.componenteKey += 1; 
+        this.componentKey += 1; 
       },
 
       async getProductsToBuy() {
@@ -73,6 +73,7 @@ export default {
           } catch (error) {
               exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
           } finally {
+              this.forceRerender();
               this.loading = false;
           }
       },
@@ -133,7 +134,6 @@ export default {
 
       async updateProductsRowTable() {
         await this.getProductsToBuy();
-        this.forceRerender();
       },
 
     },
