@@ -33,7 +33,16 @@ export default {
           id_categoria: "",
           id_vendedor: this.$route.params.id,
         },
+        dialogEditProductVisible: false,
+        editProductTitle: "Editar Producto",
         editProductForm: {
+          nombre: '',
+          descripcion: '',
+          precio: '',
+          stock: '',
+          nuevo: true,
+          id_categoria: "",
+          id_vendedor: this.$route.params.id,
           rules: {
             nombre: [
               {
@@ -181,7 +190,79 @@ export default {
           ]
           this.categories = this.categories.concat(data);
         }
-      }
+      },
+
+      editProduct(row) {
+        this.editProductForm.nombre = row.nombre;
+        this.editProductForm.descripcion = row.descripcion;
+        this.editProductForm.precio = row.precio;
+        this.editProductForm.stock = row.stock;
+        this.editProductForm.nuevo = row.nuevo;
+        this.editProductForm.id_categoria = row.id_categoria;
+  
+        this.dialogEditProductVisible = true;
+      },
+  
+      async submitEditProduct() {
+        this.$refs.editProductForm.validate(async (validate) => {
+          if (validate) {
+            try {
+              const chunkUrl = process.env.VUE_APP_URL + 'productos';
+              await APIHandler.update(chunkUrl, this.editProductForm);
+              this.$message({
+                type: 'success',
+                message: "El producto fue modificado con exito",
+              });
+              this.dialogEditProductVisible = false;
+  
+              await this.updateProductsRowTable();
+            } catch (error) {
+              exceptionHandler.exceptionWarning("Error: No se pudo modificar el producto", error);
+            }
+          } else {
+            return false;
+          }
+        });
+      },
+  
+      async deleteProduct(row) {
+        await this.$confirm(
+          `¿Desea eliminar el producto ${row.nombre}?`,
+          '¡Cuidado!',
+          {
+            confirmButtonText: 'SI',
+            cancelButtonText: 'NO',
+            type: 'warning',
+          }
+        )
+        .then(async () => {
+          let id = row.id;
+          let url = process.env.VUE_APP_URL + 'productos/' + id;
+  
+          await APIHandler.remove(url);
+          this.$message.success({
+            type: 'success',
+            message: "El producto ha sido eliminado con exito",
+          });
+          this.updateProductsRowTable();
+        })
+        .catch((error) => {
+          exceptionHandler.exceptionWarning("Error al eliminar el producto", error);
+        });
+      },
+  
+      cancelEditProduct() {
+        this.dialogEditProductVisible = false;
+        this.editProductForm = {
+          nombre: '',
+          descripcion: '',
+          precio: '',
+          stock: '',
+          nuevo: true,
+          id_categoria: "",
+          id_vendedor: this.$route.params.id,
+        };
+      },
 
     },
   };
