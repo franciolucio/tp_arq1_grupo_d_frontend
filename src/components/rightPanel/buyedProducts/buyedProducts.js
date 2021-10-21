@@ -10,7 +10,6 @@ export default {
         loading: false,
         buyedProducts: [],
         columnsBuyedProducts: [
-          {prop: 'id', label: 'ID', width: '75'},
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},

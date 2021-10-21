@@ -10,7 +10,6 @@ export default {
       loading: false,
       users: [],
       columnsUsers: [
-        {prop: 'id', label: 'ID', width: '75'},
         {prop: 'nombre', label: 'Nombre', width: 'auto'},
         {prop: 'apellido', label: 'Apellido', width: 'auto'},
         {prop: 'email', label: 'Email', width: 'auto'},
@@ -18,7 +17,6 @@ export default {
       usersPages: 1,
       sellers: [],
       columnsSellers: [
-        {prop: 'id', label: 'ID', width: '75'},
         {prop: 'razon_social', label: 'Razón Social', width: 'auto'},
         {prop: 'email', label: 'Email', width: 'auto'},
       ],

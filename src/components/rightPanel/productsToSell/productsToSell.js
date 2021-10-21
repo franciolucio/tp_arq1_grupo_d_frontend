@@ -11,7 +11,6 @@ export default {
         loading: false,
         productsToSell: [],
         columnsProductsToSell: [
-          {prop: 'id', label: 'ID', width: '75'},
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
@@ -36,6 +35,7 @@ export default {
         dialogEditProductVisible: false,
         editProductTitle: "Editar Producto",
         editProductForm: {
+          id: "",
           nombre: '',
           descripcion: '',
           precio: '',
@@ -193,9 +193,10 @@ export default {
       },
 
       editProduct(row) {
+        this.editProductForm.id = row.id;
         this.editProductForm.nombre = row.nombre;
         this.editProductForm.descripcion = row.descripcion;
-        this.editProductForm.precio = row.precio;
+        this.editProductForm.precio = row.precio.substr(2);
         this.editProductForm.stock = row.stock;
         this.editProductForm.nuevo = row.nuevo;
         this.editProductForm.id_categoria = row.id_categoria;
@@ -207,7 +208,8 @@ export default {
         this.$refs.editProductForm.validate(async (validate) => {
           if (validate) {
             try {
-              const chunkUrl = process.env.VUE_APP_URL + 'productos';
+              let id =  this.editProductForm.id;
+              const chunkUrl = process.env.VUE_APP_URL + 'productos/' + id;
               await APIHandler.update(chunkUrl, this.editProductForm);
               this.$message({
                 type: 'success',
@@ -254,6 +256,7 @@ export default {
       cancelEditProduct() {
         this.dialogEditProductVisible = false;
         this.editProductForm = {
+          id: "",
           nombre: '',
           descripcion: '',
           precio: '',

@@ -1,0 +1,79 @@
+<section class="categories">
+
+  <center>
+    <FONT FACE="helvetica neue" SIZE=6 COLOR="black"><b>Categorías</b></FONT>
+  </center>
+
+  <el-divider></el-divider>
+
+  <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+
+    <el-table :data="currentCategoriesView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+
+      <el-table-column
+      v-for="column in columnsCategories"
+      :key="column.id"
+      :label="column.label"
+      :prop="column.prop"
+      :width="column.width"
+      sortable
+      />
+
+      <el-table-column width="140">
+          <template slot-scope="scope">
+          <el-button
+              size="mini"
+              @click="editCategory(scope.row)"
+              type="primary"
+              icon="el-icon-edit"
+              circle
+              title="Editar"
+          ></el-button>
+          <el-button
+              size="mini"
+              @click="deleteCategory(scope.row)"
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              title="Eliminar"
+          ></el-button>
+          </template>
+      </el-table-column>
+
+    </el-table>
+
+  </el-row>
+
+  <!-- Dialog de Edit Category -->
+  <el-dialog
+  :title="editCategoryTitle"
+  :visible.sync="dialogEditCategoryVisible"
+  width="30%"
+  >
+      <el-form
+      :model="editCategoryForm"
+      :rules="editCategoryForm.rules"
+      ref="editCategoryForm"
+      size="mini"
+      style="text-align: left"
+      >
+          <el-row :gutter="24">
+              <el-form-item label="Nombre" prop="nombre">
+                  <el-input maxlength="30" v-model="editCategoryForm.nombre" />
+              </el-form-item>
+          </el-row>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+          <el-button size="mini" @click="dialogEditCategoryVisible = false">
+              Cancelar
+          </el-button>
+          <el-button type="primary" size="mini" @click="submitEditCategory()">
+              Guardar
+          </el-button>
+      </span>
+  </el-dialog>
+
+
+
+</section>
