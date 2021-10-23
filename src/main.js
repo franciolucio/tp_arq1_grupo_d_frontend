@@ -7,6 +7,7 @@ import locale from 'element-ui/lib/locale/lang/es';
 import VueRouter from 'vue-router';
 import inicioView from './components/rightPanel/inicioView/index';
 import usersData from './components/rightPanel/usersData/index';
+import categories from './components/rightPanel/categories/index';
 import userInfo from './components/rightPanel/userInfo/index';
 import sellerInfo from './components/rightPanel/sellerInfo/index';
 import productsToSell from './components/rightPanel/productsToSell/index';
@@ -29,6 +30,11 @@ const routes = [
         path: '/usersData',
         name: 'usersData',
         component: usersData
+    },
+    { 
+        path: '/categories',
+        name: 'categories',
+        component: categories
     },
     { 
         path: '/userInfo/:id',

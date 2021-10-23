@@ -11,7 +11,6 @@ export default {
         loading: false,
         productsToBuy: [],
         columnsProductsToBuy: [
-          {prop: 'id', label: 'ID', width: '75'},
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
@@ -53,7 +52,7 @@ export default {
     methods: {
 
       forceRerender() { 
-        this.componenteKey += 1; 
+        this.componentKey += 1; 
       },
 
       async getProductsToBuy() {
@@ -73,6 +72,7 @@ export default {
           } catch (error) {
               exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
           } finally {
+              this.forceRerender();
               this.loading = false;
           }
       },
@@ -133,7 +133,6 @@ export default {
 
       async updateProductsRowTable() {
         await this.getProductsToBuy();
-        this.forceRerender();
       },
 
     },

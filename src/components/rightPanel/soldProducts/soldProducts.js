@@ -6,12 +6,10 @@ export default {
     components: {},
     data() {
       return {
-        componentKey: 0,
         currentId: this.$route.params.id,
         loading: false,
         soldProducts: [],
         columnsSoldProducts: [
-          {prop: 'id', label: 'ID', width: '75'},
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
@@ -28,13 +26,13 @@ export default {
     },
     computed: {
       currentSoldProductsView() {
-        return this.searchsSoldProductsBar.slice(
+        return this.searchSoldProductsBar.slice(
           (this.soldProductsPages - 1) * this.pageSize,
           this.soldProductsPages * this.pageSize
         );
       },
   
-      searchsSoldProductsBar() {
+      searchSoldProductsBar() {
         return this.soldProducts
       },
     },
@@ -44,10 +42,6 @@ export default {
       this.getSoldProducts();
     },
     methods: {
-
-      forceRerender() { 
-        this.componenteKey += 1; 
-      },
 
       async getSoldProducts() {
         this.loading = true;
