@@ -112,7 +112,7 @@ export default {
             type: 'success',
             message: "La categoría ha sido eliminada con exito",
           });
-          this.updateProductsRowTable();
+          this.updateCategoriesRowTable();
         })
         .catch((error) => {
           exceptionHandler.exceptionWarning("Error al eliminar la categoría", error);
