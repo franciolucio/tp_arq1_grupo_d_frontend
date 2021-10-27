@@ -6,6 +6,42 @@
 
   <el-divider></el-divider>
 
+  <el-row>
+    <el-col>
+      <el-input
+          size="mini"
+          label="Búsqueda"
+          v-model="search"
+          placeholder="Busqueda de Productos"
+          style="width: 25%; margin-right: 1rem"
+          prefix-icon="el-icon-search"
+        >
+        </el-input>
+        <el-button
+            @click="dialogFilterVisible=true"
+            type="warning"
+            size="mini"
+            style="margin-right: 5px;"
+        >
+            Aplicar Filtros
+        </el-button>
+        <el-button
+            @click="quitFilter()"
+            type="warning"
+            size="mini"
+            v-if="quitFilterShow"
+            style="margin-right: 5px;"
+        >
+            Quitar Filtros
+        </el-button>
+        
+    </el-col>
+
+</el-row>
+
+
+  
+
   <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
       <el-table :data="currentProductsToBuyView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
@@ -81,6 +117,72 @@
       </el-button>
       <el-button type="primary" size="mini" @click="submitBuyProduct()">
           Comprar
+      </el-button>
+  </span>
+  </el-dialog>
+
+  <!-- Dialog de filter product-->
+
+  <el-dialog
+  title="Filtrar Productos"
+  :visible.sync="dialogFilterVisible"
+  width="30%"
+  >
+  <el-form
+    :model="filterForm"
+    ref="filterForm"
+    size="mini"
+    :rules="filterForm.rules"
+    style="text-align: left"
+  >
+
+    <el-row :gutter="20">
+      <el-col :span="24">
+        <el-form-item label="Tipo de Filtro" prop="filter_type">
+            <el-select
+            size="mini"
+            placeholder="Seleccione un tipo de filtro"
+            v-model="filterForm.filter_type"
+            >
+                <el-option
+                v-for="item in filterTypes"
+                :key="item.key"
+                :label="item.label"
+                :value="item.key"
+                ></el-option>
+            </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="20" v-if="filterForm.filter_type === 0 || filterForm.filter_type === 1">
+      <el-col :span="24">
+          <el-form-item label="Precio" prop="price">
+              <el-input type="number" v-model="filterForm.price" />
+          </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" v-if="filterForm.filter_type === 2">
+      <el-col :span="12">
+        <el-form-item label="Desde" prop="rangeFrom">
+          <el-input type="number" v-model="filterForm.rangeFrom" />
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Hasta" prop="rangeTo">
+          <el-input type="number" v-model="filterForm.rangeTo" />
+        </el-form-item>
+      </el-col>
+    </el-row>
+
+  </el-form>
+
+  <span slot="footer" class="dialog-footer">
+      <el-button size="mini" @click="cancelFilter">
+          Cancelar
+      </el-button>
+      <el-button type="primary" size="mini" @click="filter()">
+          Aplicar
       </el-button>
   </span>
   </el-dialog>
