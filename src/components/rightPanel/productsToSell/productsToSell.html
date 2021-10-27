@@ -16,6 +16,23 @@
         >
             Nuevo Producto
         </el-button>
+        <el-button
+            @click="downloadTemplate()"
+            type="warning"
+            size="mini"
+            :loading="loadingTemplate"
+            >
+                Descargar Template
+            </el-button>
+        <el-button
+            @click="dialogMasiveChargeVisible=true"
+            type="warning"
+            size="mini"
+            style="margin-right: 5px;"
+            :loading="loadingMasive"
+        >
+            Carga Masiva
+        </el-button>
     </el-col>
 
 </el-row>
@@ -32,11 +49,32 @@
         sortable
         />
 
+        <el-table-column width="140">
+            <template slot-scope="scope">
+            <el-button
+                size="mini"
+                @click="editProduct(scope.row)"
+                type="primary"
+                icon="el-icon-edit"
+                circle
+                title="Editar"
+            ></el-button>
+            <el-button
+                size="mini"
+                @click="deleteProduct(scope.row)"
+                type="danger"
+                icon="el-icon-delete"
+                circle
+                title="Eliminar"
+            ></el-button>
+            </template>
+        </el-table-column>
+
     </el-table>
 
   </el-row>
 
-  
+
     <!-- Dialog de create new product-->
 
     <el-dialog
@@ -84,12 +122,12 @@
         <el-row :gutter="20">
             <el-col :span="10">
                 <el-form-item label="Precio ($)" prop="precio">
-                    <el-input maxlength="30" v-model="createProductForm.precio" />
+                    <el-input type="number" v-model="createProductForm.precio" />
                 </el-form-item>
             </el-col>
             <el-col :span="8">
                 <el-form-item label="Stock" prop="stock">
-                    <el-input maxlength="30" v-model="createProductForm.stock" />
+                    <el-input type="number" v-model="createProductForm.stock" />
                 </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -110,5 +148,118 @@
     </span>
     </el-dialog>
 
+
+    <!-- Dialog de edit product-->
+
+    <el-dialog
+    :title="editProductTitle"
+    :visible.sync="dialogEditProductVisible"
+    width="30%"
+    >
+    <el-form
+        :model="editProductForm"
+        ref="editProductForm"
+        size="mini"
+        :rules="editProductForm.rules"
+        style="text-align: left"
+    >
+        <el-row :gutter="20">
+            <el-col :span="12">
+                <el-form-item label="Nombre" prop="nombre">
+                    <el-input maxlength="30" v-model="editProductForm.nombre" />
+                </el-form-item>
+            </el-col>
+            <el-col :span="12">
+                <el-form-item label="Categoría" prop="id_categoria">
+                    <el-select
+                    size="mini"
+                    placeholder="Seleccione una categoría"
+                    v-model="editProductForm.id_categoria"
+                    >
+                        <el-option
+                        v-for="item in categories"
+                        :key="item.key"
+                        :label="item.label"
+                        :value="item.key"
+                        ></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="24">
+                <el-form-item label="Descripción" prop="descripcion">
+                    <el-input maxlength="30" v-model="editProductForm.descripcion" />
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="10">
+                <el-form-item label="Precio ($)" prop="precio">
+                    <el-input maxlength="30" v-model="editProductForm.precio" />
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="Stock" prop="stock">
+                    <el-input maxlength="30" v-model="editProductForm.stock" />
+                </el-form-item>
+            </el-col>
+            <el-col :span="6">
+                <el-form-item label="Nuevo" prop="nuevo">
+                    <el-switch v-model="editProductForm.nuevo" style="padding-left: 10px;"></el-switch>
+                </el-form-item>
+            </el-col>
+        </el-row>
+    </el-form>
+
+    <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="cancelEditProduct">
+            Cancelar
+        </el-button>
+        <el-button type="primary" size="mini" @click="submitEditProduct()">
+            Guardar
+        </el-button>
+    </span>
+    </el-dialog>
+
+
+    <!-- Dialog de masive charge-->
+
+    <el-dialog
+    title="Carga Masiva de Productos"
+    :visible.sync="dialogMasiveChargeVisible"
+    width="30%"
+    style="padding: 0px;"
+    >
+        <div style="text-align: center">
+            <el-upload
+                class="upload-demo"
+                drag
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :file-list="fileList"
+                multiple
+            >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                    Suelta tu archivo aquí o <em>haz clic para cargar</em>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                    Solo archivos csv con el formato adecuado
+                    
+                </div>
+            </el-upload>
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="">
+                Cancelar
+            </el-button>
+            <el-button type="primary" size="mini" @click="">
+                Crear
+            </el-button>
+        </span>
+    </el-dialog>
 
 </section>

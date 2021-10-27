@@ -11,7 +11,6 @@ export default {
         loading: false,
         productsToSell: [],
         columnsProductsToSell: [
-          {prop: 'id', label: 'ID', width: '75'},
           {prop: 'nombre', label: 'Nombre', width: 'auto'},
           {prop: 'descripcion', label: 'Descripcion', width: 'auto'},
           {prop: 'precio', label: 'Precio', width: '100'},
@@ -33,7 +32,17 @@ export default {
           id_categoria: "",
           id_vendedor: this.$route.params.id,
         },
+        dialogEditProductVisible: false,
+        editProductTitle: "Editar Producto",
         editProductForm: {
+          id: "",
+          nombre: '',
+          descripcion: '',
+          precio: '',
+          stock: '',
+          nuevo: true,
+          id_categoria: "",
+          id_vendedor: this.$route.params.id,
           rules: {
             nombre: [
               {
@@ -52,14 +61,16 @@ export default {
             precio: [
               {
                 required: true,
-                message: "Debe elegir un precio",
+                pattern: /^[0-9]+/,
+                message: "Debe elegir un precio (campo numérico)",
                 trigger: 'blur',
               },
             ],
             stock: [
               {
                 required: true,
-                message: "Debe elegir un stock",
+                pattern: /^[0-9]+/,
+                message: "Debe elegir un stock (campo numérico)",
                 trigger: 'blur',
               },
             ],
@@ -80,6 +91,9 @@ export default {
           },
         },
         categories: [],
+        dialogMasiveChargeVisible: false,
+        loadingMasive: false,
+        loadingTemplate: false,
       }
     },
     computed: {
@@ -104,7 +118,7 @@ export default {
     methods: {
 
       forceRerender() { 
-        this.componenteKey += 1; 
+        this.componentKey += 1; 
       },
 
       async getProductsToSell() {
@@ -125,6 +139,7 @@ export default {
           } catch (error) {
               exceptionHandler.exceptionWarning("ROMPIO PAPU!!!",error);
           } finally {
+              this.forceRerender();
               this.loading = false;
           }
       },
@@ -166,7 +181,6 @@ export default {
 
       async updateProductsRowTable() {
         await this.getProductsToSell();
-        this.forceRerender();
       },
 
       async getCategories() {
@@ -181,7 +195,91 @@ export default {
           ]
           this.categories = this.categories.concat(data);
         }
-      }
+      },
+
+      editProduct(row) {
+        this.editProductForm.id = row.id;
+        this.editProductForm.nombre = row.nombre;
+        this.editProductForm.descripcion = row.descripcion;
+        this.editProductForm.precio = row.precio.substr(2);
+        this.editProductForm.stock = row.stock;
+        this.editProductForm.nuevo = row.nuevo;
+        this.editProductForm.id_categoria = row.id_categoria;
+  
+        this.dialogEditProductVisible = true;
+      },
+  
+      async submitEditProduct() {
+        this.$refs.editProductForm.validate(async (validate) => {
+          if (validate) {
+            try {
+              let id =  this.editProductForm.id;
+              const chunkUrl = process.env.VUE_APP_URL + 'productos/' + id;
+              await APIHandler.update(chunkUrl, this.editProductForm);
+              this.$message({
+                type: 'success',
+                message: "El producto fue modificado con exito",
+              });
+              this.dialogEditProductVisible = false;
+  
+              await this.updateProductsRowTable();
+            } catch (error) {
+              exceptionHandler.exceptionWarning("Error: No se pudo modificar el producto", error);
+            }
+          } else {
+            return false;
+          }
+        });
+      },
+  
+      async deleteProduct(row) {
+        await this.$confirm(
+          `¿Desea eliminar el producto ${row.nombre}?`,
+          '¡Cuidado!',
+          {
+            confirmButtonText: 'SI',
+            cancelButtonText: 'NO',
+            type: 'warning',
+          }
+        )
+        .then(async () => {
+          let id = row.id;
+          let url = process.env.VUE_APP_URL + 'productos/' + id;
+  
+          await APIHandler.remove(url);
+          this.$message.success({
+            type: 'success',
+            message: "El producto ha sido eliminado con exito",
+          });
+          this.updateProductsRowTable();
+        })
+        .catch((error) => {
+          exceptionHandler.exceptionWarning("Error al eliminar el producto", error);
+        });
+      },
+  
+      cancelEditProduct() {
+        this.dialogEditProductVisible = false;
+        this.editProductForm = {
+          id: "",
+          nombre: '',
+          descripcion: '',
+          precio: '',
+          stock: '',
+          nuevo: true,
+          id_categoria: "",
+          id_vendedor: this.$route.params.id,
+        };
+      },
+
+      async downloadTemplate() {
+        this.loadingTemplate = true;
+        let link = document.createElement("a");
+        link.download = 'carga_masiva_procutos.csv';
+        link.href = '../../../../templates/masiveProductTemplate.csv';
+        link.click();
+        this.loadingTemplate = false;
+      },
 
     },
   };

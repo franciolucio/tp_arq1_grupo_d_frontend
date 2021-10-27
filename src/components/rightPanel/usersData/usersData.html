@@ -33,7 +33,7 @@
 
             <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-                <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}">
+                <el-table :data="currentUsersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
                     <el-table-column
                     v-for="column in columnsUsers"
@@ -75,7 +75,7 @@
 
             <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-                <el-table :data="currentSellersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}">
+                <el-table :data="currentSellersView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
                     <el-table-column
                     v-for="column in columnsSellers"
@@ -183,7 +183,7 @@
         </el-form>
 
         <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="dialogEdiSellerVisible = false">
+            <el-button size="mini" @click="dialogEditSellerVisible = false">
                 Cancelar
             </el-button>
             <el-button type="primary" size="mini" @click="submitEditSeller()">

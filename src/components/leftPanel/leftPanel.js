@@ -8,7 +8,8 @@ export default {
         currentId: 0,
         disabledIndex11 : true,
         disabledIndex12 : true,
-        disabledIndex2 : true,
+        disabledIndex21 : true,
+        disabledIndex22 : true,
         disabledIndex3 : true,
         disabledIndex31 : true,
         disabledIndex32 : true,
@@ -24,7 +25,8 @@ export default {
         if (userType == 0) {
           this.disabledIndex11 = true;
           this.disabledIndex12 = true;
-          this.disabledIndex2 = false;
+          this.disabledIndex21 = false;
+          this.disabledIndex22 = false;
           this.disabledIndex3 = true;
           this.disabledIndex31 = true;
           this.disabledIndex32 = true;
@@ -33,7 +35,8 @@ export default {
         } else if (userType == 1) {
           this.disabledIndex11 = false;
           this.disabledIndex12 = true;
-          this.disabledIndex2 = true;
+          this.disabledIndex21 = true;
+          this.disabledIndex22 = true;
           this.disabledIndex3 = false;
           this.disabledIndex31 = true;
           this.disabledIndex32 = true;
@@ -42,7 +45,8 @@ export default {
         } else if (userType == 2) {
           this.disabledIndex11 = true;
           this.disabledIndex12 = false;
-          this.disabledIndex2 = true;
+          this.disabledIndex21 = true;
+          this.disabledIndex22 = true;
           this.disabledIndex3 = false;
           this.disabledIndex31 = false;
           this.disabledIndex32 = false;
@@ -51,7 +55,8 @@ export default {
         } else {
           this.disabledIndex11 = true;
           this.disabledIndex12 = true;
-          this.disabledIndex2 = true;
+          this.disabledIndex21 = true;
+          this.disabledIndex22 = true;
           this.disabledIndex3 = true;
           this.disabledIndex31 = true;
           this.disabledIndex32 = true;
@@ -70,6 +75,10 @@ export default {
 
       async goToUsersData() {
         this.$router.push('/usersData').catch(()=>{});
+      },
+
+      async goToCategories() {
+        this.$router.push('/categories').catch(()=>{});
       },
 
       async goToUserInfo() {

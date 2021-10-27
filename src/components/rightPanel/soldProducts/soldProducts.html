@@ -8,7 +8,7 @@
 
   <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-    <el-table :data="currentSoldProductsView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+    <el-table :data="currentSoldProductsView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}">
 
         <el-table-column
         v-for="column in columnsSoldProducts"
