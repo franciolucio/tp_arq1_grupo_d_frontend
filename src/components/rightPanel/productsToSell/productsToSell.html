@@ -16,6 +16,23 @@
         >
             Nuevo Producto
         </el-button>
+        <el-button
+            @click="downloadTemplate()"
+            type="warning"
+            size="mini"
+            :loading="loadingTemplate"
+            >
+                Descargar Template
+            </el-button>
+        <el-button
+            @click="dialogMasiveChargeVisible=true"
+            type="warning"
+            size="mini"
+            style="margin-right: 5px;"
+            :loading="loadingMasive"
+        >
+            Carga Masiva
+        </el-button>
     </el-col>
 
 </el-row>
@@ -105,12 +122,12 @@
         <el-row :gutter="20">
             <el-col :span="10">
                 <el-form-item label="Precio ($)" prop="precio">
-                    <el-input maxlength="30" v-model="createProductForm.precio" />
+                    <el-input type="number" v-model="createProductForm.precio" />
                 </el-form-item>
             </el-col>
             <el-col :span="8">
                 <el-form-item label="Stock" prop="stock">
-                    <el-input maxlength="30" v-model="createProductForm.stock" />
+                    <el-input type="number" v-model="createProductForm.stock" />
                 </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -203,6 +220,46 @@
             Guardar
         </el-button>
     </span>
+    </el-dialog>
+
+
+    <!-- Dialog de masive charge-->
+
+    <el-dialog
+    title="Carga Masiva de Productos"
+    :visible.sync="dialogMasiveChargeVisible"
+    width="30%"
+    style="padding: 0px;"
+    >
+        <div style="text-align: center">
+            <el-upload
+                class="upload-demo"
+                drag
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :file-list="fileList"
+                multiple
+            >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                    Suelta tu archivo aquí o <em>haz clic para cargar</em>
+                </div>
+                <div slot="tip" class="el-upload__tip">
+                    Solo archivos csv con el formato adecuado
+                    
+                </div>
+            </el-upload>
+        </div>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button size="mini" @click="">
+                Cancelar
+            </el-button>
+            <el-button type="primary" size="mini" @click="">
+                Crear
+            </el-button>
+        </span>
     </el-dialog>
 
 </section>

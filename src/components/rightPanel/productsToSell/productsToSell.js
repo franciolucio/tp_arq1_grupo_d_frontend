@@ -61,14 +61,16 @@ export default {
             precio: [
               {
                 required: true,
-                message: "Debe elegir un precio",
+                pattern: /^[0-9]+/,
+                message: "Debe elegir un precio (campo numérico)",
                 trigger: 'blur',
               },
             ],
             stock: [
               {
                 required: true,
-                message: "Debe elegir un stock",
+                pattern: /^[0-9]+/,
+                message: "Debe elegir un stock (campo numérico)",
                 trigger: 'blur',
               },
             ],
@@ -89,6 +91,9 @@ export default {
           },
         },
         categories: [],
+        dialogMasiveChargeVisible: false,
+        loadingMasive: false,
+        loadingTemplate: false,
       }
     },
     computed: {
@@ -265,6 +270,15 @@ export default {
           id_categoria: "",
           id_vendedor: this.$route.params.id,
         };
+      },
+
+      async downloadTemplate() {
+        this.loadingTemplate = true;
+        let link = document.createElement("a");
+        link.download = 'carga_masiva_procutos.csv';
+        link.href = '../../../../templates/masiveProductTemplate.csv';
+        link.click();
+        this.loadingTemplate = false;
       },
 
     },
