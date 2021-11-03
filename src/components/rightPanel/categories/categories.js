@@ -17,7 +17,7 @@ export default {
         pageSize: null,
         editCategoryForm: {
           id: null,
-          nombre: null,
+          nombre: "",
           rules: {
             nombre: [
               {
@@ -30,6 +30,20 @@ export default {
         },
         dialogEditCategoryVisible: false,
         editCategoryTitle: "Editar Categoría",
+        newCategoryTitle: "Nueva Categoría",
+        newCategoryForm: {
+          nombre: "",
+          rules: {
+            nombre: [
+              {
+                required: true,
+                message: "Debe elegir un nombre para la categoría",
+                trigger: 'blur',
+              },
+            ],
+          },
+        },
+        dialogNewCategoryVisible: false,
       }
     },
     computed: {
@@ -85,7 +99,7 @@ export default {
   
               await this.updateCategoriesRowTable();
             } catch (error) {
-              exceptionHandler.exceptionWarning("Error: No se pudo modificar el producto", error);
+              exceptionHandler.exceptionWarning("Error: No se pudo modificar la categoría", error);
             }
           } else {
             return false;
@@ -129,6 +143,37 @@ export default {
 
       async updateCategoriesRowTable() {
         await this.getCategories();
+      },
+
+      async submitNewCategory() {
+        this.$refs.newCategoryForm.validate(async (validate) => {
+          if (validate) {
+            try {
+              const chunkUrl = process.env.VUE_APP_URL + 'categorias';
+              let form = this.newCategoryForm;
+              delete form["rules"];
+              await APIHandler.create(chunkUrl, form);
+              this.$message({
+                type: 'success',
+                message: "La categoría fue creada con exito",
+              });
+              this.dialogNewCategoryVisible = false;
+  
+              await this.updateCategoriesRowTable();
+            } catch (error) {
+              exceptionHandler.exceptionWarning("Error: No se pudo crear la categoría", error);
+            }
+          } else {
+            return false;
+          }
+        });
+      },
+
+      cancelNewCategory() {
+        this.dialogNewCategoryVisible = false;
+        this.newCategoryForm = {
+          nombre: '',
+        };
       },
 
     },
