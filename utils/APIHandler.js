@@ -11,13 +11,14 @@ export async function create(chunkEndUrl, params) {
         },
         data : params
     };
-    axios(config)
+    const response = await axios(config)
         .then(function (response) {
             return response.data;
         })
         .catch(error => {
             throw exceptionHandler.exceptionAxios(error);
         });
+    return response;
 }
 
 export async function get(chunkUrl) {

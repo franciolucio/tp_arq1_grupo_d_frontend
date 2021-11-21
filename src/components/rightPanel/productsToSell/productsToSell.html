@@ -33,6 +33,18 @@
             >
                 Carga Masiva
             </el-button>
+            <el-button
+                @click="downloadLogMasive('load')"
+                size="mini"
+                style="margin-right: 1rem"
+                type="warning"
+                plain
+                v-if="logMasiveLoad !== ''"
+                :loading="logMasiveLoad === 'loading'"
+                :disabled="logMasiveLoad === ''"
+            >
+                Descargar log
+            </el-button>
         </el-col>
     </el-row>
 
@@ -235,28 +247,31 @@
             <el-upload
                 class="upload-demo"
                 drag
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action=""
+                :http-request="loadCSVUpload"
+                :before-upload="checkCSV"
+                :limit="1"
+                :on-exceed="handleExceed"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :file-list="fileList"
-                multiple
             >
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">
                     Suelta tu archivo aquí o <em>haz clic para cargar</em>
                 </div>
                 <div slot="tip" class="el-upload__tip">
-                    Solo archivos csv con el formato adecuado
+                    Solo un archivo csv con el formato adecuado
                     
                 </div>
             </el-upload>
         </div>
 
         <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="">
+            <el-button size="mini" @click="cancelMassiveCharge()">
                 Cancelar
             </el-button>
-            <el-button type="primary" size="mini" @click="">
+            <el-button type="primary" size="mini" @click="executeMassiveCharge()">
                 Crear
             </el-button>
         </span>

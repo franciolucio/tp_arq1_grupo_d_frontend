@@ -1,4 +1,5 @@
 import * as APIHandler from '../../../../utils/APIHandler';
+import * as functions from '../../../..//utils/functions';
 import * as exceptionHandler from '../../../../utils/exceptionHandler';
 
 export default {
@@ -94,6 +95,10 @@ export default {
         dialogMasiveChargeVisible: false,
         loadingMasive: false,
         loadingTemplate: false,
+        logMasiveLoad: '',
+        logHeaders: ["Nombre", "Categoría", "Descripción", "Precio", "Stock", "Nuevo", "Ejecución"],
+        massiveFile: {},
+        fileList: [],
       }
     },
     computed: {
@@ -275,10 +280,97 @@ export default {
       async downloadTemplate() {
         this.loadingTemplate = true;
         let link = document.createElement("a");
-        link.download = 'carga_masiva_procutos.csv';
+        link.download = 'carga_masiva_productos.csv';
         link.href = '../../../../templates/masiveProductTemplate.csv';
         link.click();
         this.loadingTemplate = false;
+      },
+      
+      checkCSV(file) {
+        if (file.name) {
+          if (!/\.(csv)$/i.test(file.name)) {
+            this.$message.error("El archivo tiene que ser en formato csv");
+            return false;
+          }
+        } else {
+          this.$message.error("El archivo no se ha podido procesar");
+          return false;
+        }
+      },
+
+      async loadCSVUpload(file) {
+        try {
+          let fileAux = await functions.readCsv(file.file);
+          const headers = fileAux.data[0];
+          if (headers.length !== 6) {
+            this.logMasiveLoad = '';
+            this.massiveFile = {};
+            this.fileList = [];
+            return this.$message.error("Formato del archivo no válido: Numero de columnas invalido");
+          }
+          this.massiveFile = fileAux;
+        } catch (error) {
+          this.$message.error("Fallo al cargar el archivo");
+          this.logMasiveLoad = '';
+        }
+      },
+
+      async executeMassiveCharge() {
+        this.logMasiveLoad = 'loading';
+        this.loading = true;
+
+        try {
+          this.dialogMasiveChargeVisible = false;
+          //await (new Promise(resolve => setTimeout(resolve, 5000)));
+          let inputData = this.massiveFile.data;
+          inputData.shift();
+          inputData.pop();
+          const params = {
+            data: inputData,
+          };
+          let id =  this.currentId;
+          let url = process.env.VUE_APP_URL + 'cargarProductos/' + id;
+          let log = await APIHandler.create(url, params);
+          await log.unshift(this.logHeaders);
+          this.logMasiveLoad = log;
+          this.updateProductsRowTable();
+          this.$message.success("Archivo cargado correctamente");
+
+        } catch (error) {
+
+          this.$message.error("Fallo al cargar el archivo");
+          this.logMasiveLoad = '';
+          this.loading = false;
+        
+        } finally {
+          this.forceRerender();
+          this.loading = false;
+        }
+      },
+
+      async cancelMassiveCharge() {
+        this.dialogMasiveChargeVisible = false;
+        this.logMasiveLoad = '';
+        this.fileList = [];
+        this.massiveFile = {};
+      },
+
+      async downloadLogMasive() {
+        functions.downloadArrayAsCSV('logCargaMasivaProductos', this.logMasiveLoad);
+      },
+
+      handleRemove() {
+        this.fileList = [];
+        this.massiveFile = {};
+      },
+
+      handlePreview(file) {
+        
+        this.fileList = [file];
+      },
+
+      handleExceed() {
+        this.$message.warning("Solo se puede cargar de a un archivo por vez");
       },
 
     },
