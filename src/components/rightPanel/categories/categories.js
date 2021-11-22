@@ -106,7 +106,7 @@ export default {
           }
         });
       },
-  
+
       async deleteCategory(row) {
         await this.$confirm(
           `¿Desea eliminar la categoría?`,
@@ -158,6 +158,7 @@ export default {
                 message: "La categoría fue creada con exito",
               });
               this.dialogNewCategoryVisible = false;
+              this.newCategoryForm.nombre = "";
   
               await this.updateCategoriesRowTable();
             } catch (error) {
@@ -171,9 +172,7 @@ export default {
 
       cancelNewCategory() {
         this.dialogNewCategoryVisible = false;
-        this.newCategoryForm = {
-          nombre: '',
-        };
+        this.newCategoryForm.nombre = "";
       },
 
     },
