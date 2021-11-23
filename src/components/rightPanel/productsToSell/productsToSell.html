@@ -50,7 +50,7 @@
 
     <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-        <el-table :data="currentProductsToSellView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+        <el-table :data="currentProductsToSellView" size="mini" height="60vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
             <el-table-column
             v-for="column in columnsProductsToSell"
@@ -83,6 +83,16 @@
             </el-table-column>
 
         </el-table>
+
+        <el-pagination
+            background
+            :current-page.sync="productsToSellPages"
+            layout="total, prev, pager, next, jumper, sizes"
+            :page-sizes.sync="pageSizes"
+            :page-size.sync="pageSize"
+            :total="searchProductsToSellBar.length"
+            style="margin-top: 1rem; text-align: center;"
+        />
 
     </el-row>
 

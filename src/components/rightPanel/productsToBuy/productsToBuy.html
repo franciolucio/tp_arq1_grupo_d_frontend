@@ -44,7 +44,7 @@
 
   <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-      <el-table :data="currentProductsToBuyView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+      <el-table :data="currentProductsToBuyView" size="mini" height="60vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
           <el-table-column
           v-for="column in columnsProductsToBuy"
@@ -59,8 +59,10 @@
             <template slot-scope="scope">
             <el-button
                 @click="buyProduct(scope.row)"
-                type="success"
+                type="warning"
+                plain
                 title="Comprar"
+                size="small"
                 round
             >
             Comprar
@@ -69,6 +71,16 @@
         </el-table-column>
 
       </el-table>
+
+      <el-pagination
+          background
+          :current-page.sync="productsToBuyPages"
+          layout="total, prev, pager, next, jumper, sizes"
+          :page-sizes.sync="pageSizes"
+          :page-size.sync="pageSize"
+          :total="searchProductsToBuyBar.length"
+          style="margin-top: 1rem; text-align: center;"
+      />
 
   </el-row>
 
