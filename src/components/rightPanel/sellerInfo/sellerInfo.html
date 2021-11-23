@@ -7,22 +7,22 @@
   <el-divider></el-divider>
 
   <el-form
-        :model="editSellerForm"
-        :rules="editSellerForm.rules"
-        ref="editSellerForm"
-        size="mini"
-        style="text-align: left"
-        >
-      <el-row :gutter="8">
-          <el-form-item label="Razón Social" prop="razon_social">
-              <el-input maxlength="30" v-model="editSellerForm.razon_social" />
-          </el-form-item>
-      </el-row>
-      <el-row :gutter="8">
-          <el-form-item label="Email" prop="email">
-              <el-input maxlength="30" v-model="editSellerForm.email" />
-          </el-form-item>
-      </el-row>
+    :model="editSellerForm"
+    :rules="editSellerForm.rules"
+    ref="editSellerForm"
+    size="mini"
+    style="text-align: left"
+  >
+    <el-row :gutter="8">
+        <el-form-item label="Razón Social" prop="razon_social">
+            <el-input maxlength="30" v-model="editSellerForm.razon_social" />
+        </el-form-item>
+    </el-row>
+    <el-row :gutter="8">
+        <el-form-item label="Email" prop="email">
+            <el-input maxlength="30" v-model="editSellerForm.email" />
+        </el-form-item>
+    </el-row>
   </el-form>
 
   <span slot="footer" class="dialog-footer">
@@ -30,7 +30,7 @@
       Guardar Cambios
     </el-button>
     <el-button type="danger" size="mini" @click="deleteSeller()">
-      Eliminar Usuario
+      Eliminar Vendedor
     </el-button>
   </span>
 

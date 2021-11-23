@@ -1,78 +1,100 @@
 <section class="productsToSell">
 
-  <center>
-    <FONT FACE="helvetica neue" SIZE=6 COLOR="black"><b>Productos para Vender</b></FONT>
-  </center>
+    <center>
+        <FONT FACE="helvetica neue" SIZE=6 COLOR="black"><b>Productos para Vender</b></FONT>
+    </center>
 
-  <el-divider></el-divider>
+    <el-divider></el-divider>
 
-  <el-row>
-    <el-col>
-        <el-button
-            @click="dialogNewProductVisible=true"
-            type="warning"
-            size="mini"
-            style="margin-right: 5px;"
-        >
-            Nuevo Producto
-        </el-button>
-        <el-button
-            @click="downloadTemplate()"
-            type="warning"
-            size="mini"
-            :loading="loadingTemplate"
+    <el-row>
+        <el-col>
+            <el-button
+                @click="dialogNewProductVisible=true"
+                type="warning"
+                size="mini"
+                style="margin-right: 5px;"
             >
-                Descargar Template
+                Nuevo Producto
             </el-button>
-        <el-button
-            @click="dialogMasiveChargeVisible=true"
-            type="warning"
-            size="mini"
-            style="margin-right: 5px;"
-            :loading="loadingMasive"
-        >
-            Carga Masiva
-        </el-button>
-    </el-col>
+            <el-button
+                @click="downloadTemplate()"
+                type="warning"
+                size="mini"
+                :loading="loadingTemplate"
+                >
+                    Descargar Plantilla
+                </el-button>
+            <el-button
+                @click="dialogMasiveChargeVisible=true"
+                type="warning"
+                size="mini"
+                style="margin-right: 5px;"
+                :loading="loadingMasive"
+            >
+                Carga Masiva
+            </el-button>
+            <el-button
+                @click="downloadLogMasive('load')"
+                size="mini"
+                style="margin-right: 1rem"
+                type="warning"
+                plain
+                v-if="logMasiveLoad !== ''"
+                :loading="logMasiveLoad === 'loading'"
+                :disabled="logMasiveLoad === ''"
+            >
+                Descargar log
+            </el-button>
+        </el-col>
+    </el-row>
 
-</el-row>
-  <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
+    <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-    <el-table :data="currentProductsToSellView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+        <el-table :data="currentProductsToSellView" size="mini" height="60vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
-        <el-table-column
-        v-for="column in columnsProductsToSell"
-        :key="column.id"
-        :label="column.label"
-        :prop="column.prop"
-        :width="column.width"
-        sortable
+            <el-table-column
+            v-for="column in columnsProductsToSell"
+            :key="column.id"
+            :label="column.label"
+            :prop="column.prop"
+            :width="column.width"
+            sortable
+            />
+
+            <el-table-column width="140">
+                <template slot-scope="scope">
+                <el-button
+                    size="mini"
+                    @click="editProduct(scope.row)"
+                    type="primary"
+                    icon="el-icon-edit"
+                    circle
+                    title="Editar"
+                ></el-button>
+                <el-button
+                    size="mini"
+                    @click="deleteProduct(scope.row)"
+                    type="danger"
+                    icon="el-icon-delete"
+                    circle
+                    title="Eliminar"
+                ></el-button>
+                </template>
+            </el-table-column>
+
+        </el-table>
+
+        <el-pagination
+            background
+            :current-page.sync="productsToSellPages"
+            layout="total, prev, pager, next, jumper, sizes"
+            :page-sizes.sync="pageSizes"
+            :page-size.sync="pageSize"
+            :total="searchProductsToSellBar.length"
+            style="margin-top: 1rem; text-align: center;"
         />
 
-        <el-table-column width="140">
-            <template slot-scope="scope">
-            <el-button
-                size="mini"
-                @click="editProduct(scope.row)"
-                type="primary"
-                icon="el-icon-edit"
-                circle
-                title="Editar"
-            ></el-button>
-            <el-button
-                size="mini"
-                @click="deleteProduct(scope.row)"
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                title="Eliminar"
-            ></el-button>
-            </template>
-        </el-table-column>
-
-    </el-table>
-
-  </el-row>
+    </el-row>
 
 
     <!-- Dialog de create new product-->
@@ -235,28 +257,31 @@
             <el-upload
                 class="upload-demo"
                 drag
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action=""
+                :http-request="loadCSVUpload"
+                :before-upload="checkCSV"
+                :limit="1"
+                :on-exceed="handleExceed"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :file-list="fileList"
-                multiple
             >
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">
                     Suelta tu archivo aquí o <em>haz clic para cargar</em>
                 </div>
                 <div slot="tip" class="el-upload__tip">
-                    Solo archivos csv con el formato adecuado
+                    Solo un archivo csv con el formato adecuado
                     
                 </div>
             </el-upload>
         </div>
 
         <span slot="footer" class="dialog-footer">
-            <el-button size="mini" @click="">
+            <el-button size="mini" @click="cancelMassiveCharge()">
                 Cancelar
             </el-button>
-            <el-button type="primary" size="mini" @click="">
+            <el-button type="primary" size="mini" @click="executeMassiveCharge()">
                 Crear
             </el-button>
         </span>

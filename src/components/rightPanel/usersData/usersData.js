@@ -14,14 +14,14 @@ export default {
         {prop: 'apellido', label: 'Apellido', width: 'auto'},
         {prop: 'email', label: 'Email', width: 'auto'},
       ],
-      usersPages: 1,
       sellers: [],
       columnsSellers: [
         {prop: 'razon_social', label: 'Razón Social', width: 'auto'},
         {prop: 'email', label: 'Email', width: 'auto'},
       ],
       sellersPages: 1,
-      pageSizes: [12, 15, 50, 100],
+      usersPages: 1,
+      pageSizes: [10, 25, 50, 100],
       pageSize: null,
       activeName: 'first',
       editUserForm: {

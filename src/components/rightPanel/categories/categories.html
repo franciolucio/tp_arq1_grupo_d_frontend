@@ -6,9 +6,22 @@
 
   <el-divider></el-divider>
 
+  <el-row>
+        <el-col>
+            <el-button
+                @click="dialogNewCategoryVisible=true"
+                type="warning"
+                size="mini"
+                style="margin-right: 5px;"
+            >
+                Nueva Categoría
+            </el-button>
+        </el-col>
+    </el-row>
+
   <el-row v-loading="loading" element-loading-background="rgba(254, 254, 254, 0.7)">
 
-    <el-table :data="currentCategoriesView" size="mini" height="70vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
+    <el-table :data="currentCategoriesView" size="mini" height="60vh" style="margin-top: 15px;" :default-sort="{prop:'id', order:'ascending'}" :key="componentKey">
 
       <el-table-column
       v-for="column in columnsCategories"
@@ -42,6 +55,16 @@
 
     </el-table>
 
+    <el-pagination
+            background
+            :current-page.sync="categoriesPages"
+            layout="total, prev, pager, next, jumper, sizes"
+            :page-sizes.sync="pageSizes"
+            :page-size.sync="pageSize"
+            :total="searchCategoriesBar.length"
+            style="margin-top: 1rem; text-align: center;"
+        />
+
   </el-row>
 
   <!-- Dialog de Edit Category -->
@@ -57,7 +80,7 @@
       size="mini"
       style="text-align: left"
       >
-          <el-row :gutter="24">
+          <el-row>
               <el-form-item label="Nombre" prop="nombre">
                   <el-input maxlength="30" v-model="editCategoryForm.nombre" />
               </el-form-item>
@@ -65,7 +88,7 @@
       </el-form>
 
       <span slot="footer" class="dialog-footer">
-          <el-button size="mini" @click="dialogEditCategoryVisible = false">
+          <el-button size="mini" @click="cancelEditCategory()">
               Cancelar
           </el-button>
           <el-button type="primary" size="mini" @click="submitEditCategory()">
@@ -74,6 +97,36 @@
       </span>
   </el-dialog>
 
+
+  <!-- Dialog de create new Category-->
+  <el-dialog
+  :title="newCategoryTitle"
+  :visible.sync="dialogNewCategoryVisible"
+  width="30%"
+  >
+      <el-form
+      :model="newCategoryForm"
+      :rules="newCategoryForm.rules"
+      ref="newCategoryForm"
+      size="mini"
+      style="text-align: left"
+      >
+          <el-row>
+              <el-form-item label="Nombre" prop="nombre">
+                  <el-input maxlength="30" v-model="newCategoryForm.nombre" />
+              </el-form-item>
+          </el-row>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+          <el-button size="mini" @click="cancelNewCategory()">
+              Cancelar
+          </el-button>
+          <el-button type="primary" size="mini" @click="submitNewCategory()">
+              Guardar
+          </el-button>
+      </span>
+  </el-dialog>
 
 
 </section>

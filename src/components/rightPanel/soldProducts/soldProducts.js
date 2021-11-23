@@ -20,7 +20,7 @@ export default {
           {prop: 'fecha_compra', label: 'Fecha', width: 'auto'},
         ],
         soldProductsPages: 1,
-        pageSizes: [12, 15, 50, 100],
+        pageSizes: [10, 25, 50, 100],
         pageSize: null,
       }
     },
